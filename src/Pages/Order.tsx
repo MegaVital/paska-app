@@ -133,3 +133,119 @@ export const Order: FC<OrderItemProps> = () => {
     //     localStorage.setItem('cart', JSON.stringify(newCart))
     // }
 
+
+    
+// const [cart, setCart] = useState<CartEntry[]>(getLocalStorageCart())
+
+// const test = (arg1: number, arg2: string) => {
+    //     let result: string = '';
+    //     for (let i = 0; i < arg1; i++) {
+
+    //         result += arg2;
+    //         console.log(result);
+
+    //     };
+    //     return result;
+
+    // }
+
+     // const promises = new Promise((resolve, reject) => {
+
+    //     setTimeout(() => resolve('hyi'), 2000)
+    // })
+
+
+    // const getPromiceResult = async () => {
+    //     const result = await promises.then(res => res)
+    //     console.log("RES", result)
+    //     console.log('RRRRR');
+
+    // }
+    // getPromiceResult()
+
+
+
+    // let promise = new Promise(function (resolve, reject) {
+    //     setTimeout(() => resolve("done!"), 1000);
+    // });
+
+    // // resolve запустит первую функцию, переданную в .then
+    // promise.then(
+    //     result => alert(result), // выведет "done!" через одну секунду
+    //     error => alert(error) // не будет запущена
+    // );
+
+
+    // const getDataFromServer = async () => {
+    //     setIsLoading(true)
+    //     const res = await request('data', 'GET') as CatalogueEntry[]
+    //     res.forEach((el, index) => {
+    //         res[index].image = 'data:image/jpeg;base64,' + res[index].image
+    //     })
+    //     dispatcher(addData(res))
+    //     setIsLoading(false)
+    // }
+
+        // const brandData = useAppSelector(state => {
+    //     const data = state.persistedReducer.dataSlice.data
+    //     return data.filter(el => checkedBrand.includes(el.brand))
+    // }
+    // )
+    // const materialData = useAppSelector(state => {
+    //     const data = state.persistedReducer.dataSlice.data
+    //     return data.filter(el => checkedMaterial.includes(el.material.toString()))
+    // }
+    // )
+    // const sizeData = useAppSelector(state => {
+    //     const data = state.persistedReducer.dataSlice.data
+    //     return data.filter(el => checkedSize.includes(el.size))
+    // }
+    // )
+        // setDataFilter()
+        // const drawerBrand = drawer[0].contain
+        // const checkedTrueIndex = checkedBrand.findIndex(el => el === name)
+        // const checkedElement = checkedBrand.find(el => el === name)
+        // if (!checkedElement) {
+        //     checkedBrand.push(drawerBrand[index])
+        // }
+        // else if (checkedElement === drawerBrand[index]) {
+        //     checkedBrand.splice(checkedTrueIndex)
+        // }
+        // setCheckedBrand(checkedBrand);
+
+
+
+    // const initialFilters: DataFilters = {
+    //     Brand: [],
+    //     Size: [],
+    //     Material: []
+    // }
+    // const [dataFilter, setDataFilter] = useState<DataFilters>(initialFilters)
+     
+    // const newArray = dataFilter[propertyName as keyof DataFilters]
+        // if (!newArray.includes(containName)) { newArray.push(containName) }
+        // else {
+        //     newArray.splice(newArray.indexOf(containName), 1)
+        // }
+        // setDataFilter({
+        //     ...dataFilter,
+        //     [propertyName]: newArray,
+        // })
+
+        
+
+    // const filteredData = useAppSelector(state => {
+    //     if (dataFilter.Brand.length === 0 && dataFilter.Size.length === 0 && dataFilter.Material.length === 0 && price[0] === 0 && price[1] === max)
+    //         return state.persistedReducer.dataSlice.data
+    //     else if (dataFilter.Brand.length > 0 || dataFilter.Size.length > 0 || dataFilter.Material.length > 0 || price[0] > 0 || price[1] < max)
+    //         return state.persistedReducer.dataSlice.data
+    //             .filter(el => {
+    //                 if (el.brand.toString().includes(dataFilter.Brand.toString())
+    //                     && el.size.toString().includes(dataFilter.Size.toString())
+    //                     && el.material.toString().includes(dataFilter.Material.toString())
+    //                     && el.price > price[0] && el.price < price[1])
+    //                     return el
+    //             })
+    // }
+    // )
+
