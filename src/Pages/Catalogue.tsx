@@ -130,7 +130,7 @@ export const Catalogue: FC<Props> = () => {
     }
 
 
-    const letters = (arg: string) => {
+    const letters = (arg: string): string => {
         let count = 1
         let countedString: string = ''
         arg.split('').map((el, i) => {
@@ -144,6 +144,7 @@ export const Catalogue: FC<Props> = () => {
 
             }
         })
+        return ''
     };
   letters('ddddtttttthjjjjb')
 
