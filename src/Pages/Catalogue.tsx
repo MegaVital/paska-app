@@ -13,6 +13,7 @@ import { FilterField } from "../components/FilterField";
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import { arrayBuffer } from "node:stream/consumers";
 
 const searchCheck = (search: string, dataMaterial: string): boolean => {
     if (!search) return true
@@ -127,7 +128,26 @@ export const Catalogue: FC<Props> = () => {
                 break;
         }
     }
-   
+
+
+    const letters = (arg: string) => {
+        let count = 1
+        let countedString: string = ''
+        arg.split('').map((el, i) => {
+            if (arg[i] === arg[i + 1]) {
+                count++;
+            } else {
+                let result = `${count}${arg[i]}`;
+                countedString += result
+                count = 1;
+                console.log(countedString);
+
+            }
+        })
+    };
+  letters('ddddtttttthjjjjb')
+
+
 
     const Search = styled('div')(({ theme }) => ({
         position: 'relative',
