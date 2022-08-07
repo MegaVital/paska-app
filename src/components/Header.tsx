@@ -13,6 +13,7 @@ import { AppBar } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import { useLocation } from 'react-router-dom';
 import { searchTitleReducer } from '../redux/dataReducer';
+import { searchTitleReducer } from '../redux/dataReducer';
 
 
 type SearchBarProps = {}
@@ -38,7 +39,7 @@ export const SearchBar: FunctionComponent<SearchBarProps> = () => {
 
     const cart = useAppSelector(state => state.persistedReducer.cartSlice)
 
-    const data = useAppSelector(state => state.persistedReducer.dataSlice.data)
+    const { data, search } = useAppSelector(state => state.persistedReducer.dataSlice)
 
     const dispatcher = useAppDispatch()
 
@@ -48,7 +49,6 @@ export const SearchBar: FunctionComponent<SearchBarProps> = () => {
         setSearchTitle(event.target.value)
     }
     dispatcher(searchTitleReducer(searchTitle))
-
     const Search = styled('div')(({ theme }) => ({
         position: 'relative',
         borderRadius: theme.shape.borderRadius,
@@ -127,21 +127,26 @@ export const SearchBar: FunctionComponent<SearchBarProps> = () => {
                     </Typography>
                     {
                         (nav.pathname === '/catalogue') ?
-                            <Search>
-                                <SearchIconWrapper>
-                                    <SearchIcon />
-                                </SearchIconWrapper>
-                                <StyledInputBase
-                                    placeholder="Search…"
-                                    inputProps={{ 'aria-label': 'search' }}
-                                    onChange={handleSearchInputChange}
-                                    value={searchTitle}
-                                    autoFocus={true}
-                                />
+                            {
+                        (nav.pathname === '/catalogue') ?
+                                <Search>
+                                    <SearchIconWrapper>
+                                        <SearchIcon />
+                                    </SearchIconWrapper>
+                                    <StyledInputBase
+                                        placeholder="Search…"
+                                        inputProps={{ 'aria-label': 'search' }}
+                                        onChange={handleSearchInputChange}
+                                        value={search}
+                                        autoFocus={true}
+                                    />
 
-                            </Search>
-                            :
-                            null
+                                </Search>
+                                :
+                                null
+                    }
+                    :
+                    null
                     }
                 </Toolbar>
             </AppBar>

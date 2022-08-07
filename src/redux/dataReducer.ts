@@ -50,7 +50,7 @@ const dataSlice = createSlice({
         searchTitleReducer(state: DataState, action: { payload: string }) {
             state.search = action.payload
         },
-        sort(state: DataState, action: { payload: SelectChangeEvent }) {
+        sort(state: DataState, action: { payload: string }) {
             state.sort = ''
         }
 
