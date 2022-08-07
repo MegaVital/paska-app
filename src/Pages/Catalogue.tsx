@@ -1,10 +1,10 @@
 import React, { FC, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { alpha, AppBar, Box, Button, CircularProgress, Grid, IconButton, InputBase, styled, Toolbar, Typography } from '@mui/material';
+import { alpha, AppBar, Box, Button, CircularProgress, FormControl, Grid, IconButton, InputBase, InputLabel, MenuItem, Select, SelectChangeEvent, styled, Toolbar, Typography } from '@mui/material';
 import { CatalogueItem } from "../components/CatalogueItem";
 import { AppRoutes } from '../routerTypes';
 import "./pages.css"
-import { changeCartContaining, CartActions, request, sizeCheck, materialCheck, brandCheck } from "../service.helper";
+import { changeCartContaining, CartActions, request, materialCheck} from "../service.helper";
 import { CatalogueEntry } from "../types";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { addItemToCart, deleteItemFromCart, addQuantity, reduceQuantity } from "../redux/cartReducer";
@@ -13,15 +13,6 @@ import { FilterField } from "../components/FilterField";
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { arrayBuffer } from "node:stream/consumers";
-
-const searchCheck = (search: string, dataMaterial: string): boolean => {
-    if (!search) return true
-    let result = false
-        if (dataMaterial.includes(search)) result = true
-    return result
-    
-}
 
 type Props = {}
 export const Catalogue: FC<Props> = () => {
@@ -39,11 +30,17 @@ export const Catalogue: FC<Props> = () => {
     const handleSearchInputChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
         setSearchTitle(event.target.value)
     }
+    const [sort, setSort] = React.useState('');
+
+    const handleChange = (event: SelectChangeEvent) => {
+        setSort(event.target.value as string);
+    };
+    
 
     const serverData = useAppSelector(state => {
         const { filter, data, price } = state.persistedReducer.dataSlice
         if (filter.Size.length === 0 && filter.Material.length === 0 && filter.Brand.length === 0 && price[0] === Math.min(...data.map(price => price.price))
-            && price[1] === Math.max(...data.map(price => price.price)) && !searchTitle)
+            && price[1] === Math.max(...data.map(price => price.price)) && !searchTitle && sort === '')
             return data
             else 
             return data
@@ -58,8 +55,14 @@ export const Catalogue: FC<Props> = () => {
                         || el.brand.includes(searchTitle) || el.material.toString().includes(searchTitle) || el.size.includes(searchTitle))
                     )   return el            
                     })
-                }
-                )
+            .sort((a, b) => { 
+                if (sort === 'fromCheap')
+                 return a.price - b.price 
+            else if (sort === 'fromExp') 
+                return b.price - a.price
+                else return 0
+            })
+                })
     const filteredData = useAppSelector(state => state.persistedReducer.dataSlice.filter)
 
     const dispatcher = useAppDispatch()
@@ -204,6 +207,7 @@ export const Catalogue: FC<Props> = () => {
         else return 0
     }
 
+    
     return (
         <div>
             <Box sx={{ flexGrow: 1 }}>
@@ -253,6 +257,20 @@ export const Catalogue: FC<Props> = () => {
             <Button variant='contained' onClick={goHome} color="primary" size='medium' sx={{ ml: '30px', mb: '0px', mt: '30px' }}>Move to Home</Button>
             <Grid sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
                 <Button variant="contained" onClick={goOrder} color='success' size='medium' sx={{ marginLeft: '30px', mt: '30px ', textAlign: 'left' }}>Move to Order</Button>
+                <FormControl sx={{width: '200px', display: "flex", mr: 30}}>
+                    <InputLabel id="demo-simple-select-label">Sort</InputLabel>
+                    <Select
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        value={sort}
+                        label="Sort"
+                        onChange={handleChange}
+                    >
+                        <MenuItem value={''}>None</MenuItem>
+                        <MenuItem value={'fromCheap'}>From cheap to expensive</MenuItem>
+                        <MenuItem value={'fromExp'}>From expensive to cheap</MenuItem>
+                    </Select>
+                </FormControl>
             </Grid>
             {
                 (isLoading) ?

@@ -1,3 +1,4 @@
+import { SelectChangeEvent } from '@mui/material';
 import { createSlice } from "@reduxjs/toolkit"
 import { CatalogueEntry, DataFilters } from "../types"
 
@@ -5,7 +6,8 @@ interface DataState {
     data: CatalogueEntry[],
     filter: DataFilters,
     price: number[],
-    search: string[]
+    search: string[],
+    sort: string
 }
 
 const initialFilters: DataFilters = {
@@ -16,7 +18,7 @@ const initialFilters: DataFilters = {
 
 
 
-const initialState: DataState = { data: [], filter: initialFilters, price: [], search: [] }
+const initialState: DataState = { data: [], filter: initialFilters, price: [], search: [], sort: '' }
 const dataSlice = createSlice({
     name: 'data',
     initialState,
@@ -47,13 +49,16 @@ const dataSlice = createSlice({
         },
         search(state: DataState, action: { payload: React.SetStateAction<string> }) {
             state.search = []
+        },
+        sort(state: DataState, action: { payload: SelectChangeEvent }) {
+            state.sort = ''
         }
 
     }
 })
 
 
-export const { addData, addFilter, addPrice, filterShift, search } = dataSlice.actions
+export const { addData, addFilter, addPrice, filterShift, search, sort } = dataSlice.actions
 export default dataSlice.reducer
 
 // setDataFilter(
