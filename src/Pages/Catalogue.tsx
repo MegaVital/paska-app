@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { alpha, AppBar, Box, Button, CircularProgress, FormControl, Grid, IconButton, InputBase, InputLabel, MenuItem, Select, SelectChangeEvent, styled, Toolbar, Typography } from '@mui/material';
+import { Button, CircularProgress, FormControl, Grid, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material';
 import { CatalogueItem } from "../components/CatalogueItem";
 import { AppRoutes } from '../routerTypes';
 import "./pages.css"
@@ -8,11 +8,8 @@ import { changeCartContaining, CartActions, request, materialCheck} from "../ser
 import { CatalogueEntry } from "../types";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { addItemToCart, deleteItemFromCart, addQuantity, reduceQuantity } from "../redux/cartReducer";
-import { addData, search } from '../redux/dataReducer'
+import { addData } from '../redux/dataReducer'
 import { FilterField } from "../components/FilterField";
-import MenuIcon from '@mui/icons-material/Menu';
-import SearchIcon from '@mui/icons-material/Search';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 type Props = {}
 export const Catalogue: FC<Props> = () => {
@@ -25,22 +22,18 @@ export const Catalogue: FC<Props> = () => {
     
     const data = useAppSelector(state => state.persistedReducer.dataSlice.data)
 
-    const [searchTitle, setSearchTitle] = useState<string>('')
-
-    const handleSearchInputChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
-        setSearchTitle(event.target.value)
-    }
-    const [sort, setSort] = React.useState('');
+    const searchState = useAppSelector(state => state.persistedReducer.dataSlice.search)
+    
+    const [sort, setSort] = useState('');
 
     const handleChange = (event: SelectChangeEvent) => {
         setSort(event.target.value as string);
     };
     
-
     const serverData = useAppSelector(state => {
         const { filter, data, price } = state.persistedReducer.dataSlice
         if (filter.Size.length === 0 && filter.Material.length === 0 && filter.Brand.length === 0 && price[0] === Math.min(...data.map(price => price.price))
-            && price[1] === Math.max(...data.map(price => price.price)) && !searchTitle && sort === '')
+            && price[1] === Math.max(...data.map(price => price.price)) && !searchState && sort === '')
             return data
             else 
             return data
@@ -51,8 +44,8 @@ export const Catalogue: FC<Props> = () => {
                         && el.price >= price[0]  
                         && el.price <= price[1]
                         && materialCheck(filter.Material, el.material)
-                        &&( el.title.includes(searchTitle)
-                        || el.brand.includes(searchTitle) || el.material.toString().includes(searchTitle) || el.size.includes(searchTitle))
+                        &&( el.title.includes(searchState)
+                        || el.brand.includes(searchState) || el.material.toString().includes(searchState) || el.size.includes(searchState))
                     )   return el            
                     })
             .sort((a, b) => { 
@@ -157,56 +150,6 @@ export const Catalogue: FC<Props> = () => {
     };
     console.log(letters('vvvvvvfffffffrrrrrrrrrrhpottttttt'));
    
-
-
-
-    const Search = styled('div')(({ theme }) => ({
-        position: 'relative',
-        borderRadius: theme.shape.borderRadius,
-        backgroundColor: alpha(theme.palette.common.white, 0.15),
-        '&:hover': {
-            backgroundColor: alpha(theme.palette.common.white, 0.25),
-        },
-        marginLeft: 0,
-        width: '100%',
-        [theme.breakpoints.up('sm')]: {
-            marginLeft: theme.spacing(1),
-            width: 'auto',
-        },
-    }));
-
-    const SearchIconWrapper = styled('div')(({ theme }) => ({
-        padding: theme.spacing(0, 2),
-        height: '100%',
-        position: 'absolute',
-        pointerEvents: 'none',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-    }));
-
-    const StyledInputBase = styled(InputBase)(({ theme }) => ({
-        color: 'inherit',
-        '& .MuiInputBase-input': {
-            padding: theme.spacing(1, 1, 1, 0),
-            // vertical padding + font size from searchIcon
-            paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-            width: '100%',
-
-        },
-    }));
-    const totalPrice = () => {
-        let sum = 0;
-        cart.forEach(cartEntry => {
-            let dataElement = data.find(el => el.id === cartEntry.id)
-            if (dataElement && cartEntry.quantity) {
-                sum += dataElement.price * cartEntry.quantity
-            }
-        })
-        if (sum === 0) { return 'Empty' }
-        return sum + '$';
-    }
-    
     const itemTotalPrice = (id: string): number => {
         let currentCatalogueEntry = data.find(el => el.id === id)
         let currentCartEntry = cart.find(el => el.id === id)
@@ -217,50 +160,6 @@ export const Catalogue: FC<Props> = () => {
     
     return (
         <div>
-            <Box sx={{ flexGrow: 1 }}>
-                <AppBar position="static">
-                    <Toolbar>
-                        <IconButton
-                            size="large"
-                            edge="start"
-                            color="inherit"
-                            aria-label="open drawer"
-                            sx={{ mr: 2 }}
-                        >
-                            <MenuIcon />
-                        </IconButton>
-                        <Typography
-                            variant="h6"
-                            noWrap
-                            component="div"
-                            sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
-                        >
-                            Catalogue
-                        </Typography>
-                        <Typography
-                            variant="h6"
-                            noWrap
-                            component="div"
-                            sx={{ display: 'flex', mr: 5 }}
-                        >
-                            <ShoppingCartIcon color='action' fontSize='large' sx={{ mr: 2 }} /> {totalPrice()}
-                        </Typography>
-                        <Search>
-                            <SearchIconWrapper>
-                                <SearchIcon />
-                            </SearchIconWrapper>
-                            <StyledInputBase
-                                placeholder="Search…"
-                                inputProps={{ 'aria-label': 'search' }}
-                                onChange={handleSearchInputChange}
-                                value={searchTitle}
-                                autoFocus={true}
-                            />
-
-                        </Search>
-                    </Toolbar>
-                </AppBar>
-            </Box>
             <Button variant='contained' onClick={goHome} color="primary" size='medium' sx={{ ml: '30px', mb: '0px', mt: '30px' }}>Move to Home</Button>
             <Grid sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
                 <Button variant="contained" onClick={goOrder} color='success' size='medium' sx={{ marginLeft: '30px', mt: '30px ', textAlign: 'left' }}>Move to Order</Button>

@@ -6,7 +6,7 @@ interface DataState {
     data: CatalogueEntry[],
     filter: DataFilters,
     price: number[],
-    search: string[],
+    search: string,
     sort: string
 }
 
@@ -18,7 +18,7 @@ const initialFilters: DataFilters = {
 
 
 
-const initialState: DataState = { data: [], filter: initialFilters, price: [], search: [], sort: '' }
+const initialState: DataState = { data: [], filter: initialFilters, price: [], search: '', sort: '' }
 const dataSlice = createSlice({
     name: 'data',
     initialState,
@@ -47,8 +47,8 @@ const dataSlice = createSlice({
             state.price = [Math.min(...state.data.map(el => el.price)), Math.max(...state.data.map(el => el.price))]
 
         },
-        search(state: DataState, action: { payload: React.SetStateAction<string> }) {
-            state.search = []
+        searchTitleReducer(state: DataState, action: { payload: string }) {
+            state.search = action.payload
         },
         sort(state: DataState, action: { payload: SelectChangeEvent }) {
             state.sort = ''
@@ -58,7 +58,7 @@ const dataSlice = createSlice({
 })
 
 
-export const { addData, addFilter, addPrice, filterShift, search, sort } = dataSlice.actions
+export const { addData, addFilter, addPrice, filterShift, searchTitleReducer, sort } = dataSlice.actions
 export default dataSlice.reducer
 
 // setDataFilter(
