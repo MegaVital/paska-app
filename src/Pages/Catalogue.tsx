@@ -62,6 +62,13 @@ export const Catalogue: FC<Props> = () => {
                 return b.price - a.price
                 else return 0
             })
+            .sort((a, b) => { 
+                if (a.title > b.title && sort === 'fromZtoA')
+                        return -1
+                        else if (b.title > a.title && sort === 'fromAtoZ')
+                        return -1
+                        else return 0
+            })
                 })
     const filteredData = useAppSelector(state => state.persistedReducer.dataSlice.filter)
 
@@ -267,8 +274,10 @@ export const Catalogue: FC<Props> = () => {
                         onChange={handleChange}
                     >
                         <MenuItem value={''}>None</MenuItem>
-                        <MenuItem value={'fromCheap'}>From cheap to expensive</MenuItem>
-                        <MenuItem value={'fromExp'}>From expensive to cheap</MenuItem>
+                        <MenuItem value={'fromCheap'}>First lowest price</MenuItem>
+                        <MenuItem value={'fromExp'}>First highest price</MenuItem>
+                        <MenuItem value={'fromAtoZ'}>From A to Z</MenuItem>
+                        <MenuItem value={'fromZtoA'}>From Z to A</MenuItem>
                     </Select>
                 </FormControl>
             </Grid>
