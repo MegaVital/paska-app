@@ -143,13 +143,13 @@ export const Catalogue: FC<Props> = () => {
                 let result = `${count}${arg[i]}`;
                 countedString += result
                 count = 1;
-                console.log(countedString);
 
             }
         })
-        return ''
+        return countedString
     };
-  letters('ddddtttttthjjjjb')
+    console.log(letters('vvvvvvfffffffrrrrrrrrrrhpottttttt'));
+   
 
 
 
