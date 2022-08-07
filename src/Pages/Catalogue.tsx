@@ -53,14 +53,11 @@ export const Catalogue: FC<Props> = () => {
                  return a.price - b.price 
             else if (sort === 'fromExp') 
                 return b.price - a.price
+                else if (a.title > b.title && sort === 'fromZtoA')
+                return -1
+                else if (b.title > a.title && sort === 'fromAtoZ')
+                return -1
                 else return 0
-            })
-            .sort((a, b) => { 
-                if (a.title > b.title && sort === 'fromZtoA')
-                        return -1
-                        else if (b.title > a.title && sort === 'fromAtoZ')
-                        return -1
-                        else return 0
             })
                 })
     const filteredData = useAppSelector(state => state.persistedReducer.dataSlice.filter)

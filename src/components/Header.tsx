@@ -38,7 +38,7 @@ export const SearchBar: FunctionComponent<SearchBarProps> = () => {
 
     const cart = useAppSelector(state => state.persistedReducer.cartSlice)
 
-    const data = useAppSelector(state => state.persistedReducer.dataSlice.data)
+    const { data, search } = useAppSelector(state => state.persistedReducer.dataSlice)
 
     const dispatcher = useAppDispatch()
 
@@ -48,7 +48,6 @@ export const SearchBar: FunctionComponent<SearchBarProps> = () => {
         setSearchTitle(event.target.value)
     }
     dispatcher(searchTitleReducer(searchTitle))
-
     const Search = styled('div')(({ theme }) => ({
         position: 'relative',
         borderRadius: theme.shape.borderRadius,
@@ -84,6 +83,7 @@ export const SearchBar: FunctionComponent<SearchBarProps> = () => {
 
         },
     }));
+
     const totalPrice = () => {
         let sum = 0;
         cart.forEach(cartEntry => {
@@ -135,7 +135,7 @@ export const SearchBar: FunctionComponent<SearchBarProps> = () => {
                                     placeholder="Search…"
                                     inputProps={{ 'aria-label': 'search' }}
                                     onChange={handleSearchInputChange}
-                                    value={searchTitle}
+                                    value={search}
                                     autoFocus={true}
                                 />
 
