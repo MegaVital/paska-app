@@ -1,5 +1,6 @@
 export enum AppRoutes {
-    HOME = '/',
+    LOGIN = '/',
+    REGISTRATION = '/registration',
     CATALOGUE = '/catalogue',
     ORDER = '/order',
     PRODUCT = "/product",

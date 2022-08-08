@@ -36,7 +36,7 @@ export const Order: FC<OrderItemProps> = () => {
     }
 
     const goHome = () => {
-        navigate(AppRoutes.HOME)
+        navigate(AppRoutes.LOGIN)
     }
 
     const changeTotalValue = (id: string, isDeleting: boolean) => {

@@ -19,7 +19,7 @@ export const changeCartContaining = (isElementQuantitySingle: boolean, isDeletin
 }
 
 export function request(url: string, method: string, body?: object) {
-    return (fetch(`http://localhost:1213/${url}`, {
+    return (fetch(`http://localhost:1111/${url}`, {
         method: method,
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body),

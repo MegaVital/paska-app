@@ -22,15 +22,12 @@ export const SearchBar: FunctionComponent<SearchBarProps> = () => {
     const nav = useLocation()
     const currentHeadLine = () => {
         switch (nav.pathname) {
-            case '/':
-                return "Home"
             case '/catalogue':
                 return 'Catalogue'
             case '/order':
                 return 'Order'
             default:
                 return 'Product'
-                break;
         }
     }
     console.log(nav);
@@ -97,54 +94,55 @@ export const SearchBar: FunctionComponent<SearchBarProps> = () => {
     }
 
     return (
-        <Box sx={{ flexGrow: 1 }}>
-            <AppBar position="static">
-                <Toolbar>
-                    <IconButton
-                        size="large"
-                        edge="start"
-                        color="inherit"
-                        aria-label="open drawer"
-                        sx={{ mr: 2 }}
-                    >
-                        <MenuIcon />
-                    </IconButton>
-                    <Typography
-                        variant="h6"
-                        noWrap
-                        component="div"
-                        sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
-                    >
-                        {currentHeadLine()}
-                    </Typography>
-                    <Typography
-                        variant="h6"
-                        noWrap
-                        component="div"
-                        sx={{ display: 'flex', mr: 5 }}
-                    >
-                        <ShoppingCartIcon color='action' fontSize='large' sx={{ mr: 2 }} /> {totalPrice()}
-                    </Typography>
-                    {
-                        (nav.pathname === '/catalogue') ?
-                            <Search>
-                                <SearchIconWrapper>
-                                    <SearchIcon />
-                                </SearchIconWrapper>
-                                <StyledInputBase
-                                    placeholder="Search…"
-                                    inputProps={{ 'aria-label': 'search' }}
-                                    onChange={handleSearchInputChange}
-                                    value={search}
-                                    autoFocus={true}
-                                />
+        (nav.pathname !== '/' && nav.pathname !== '/registration') ?
+            <Box sx={{ flexGrow: 1 }}>
+                <AppBar position="static">
+                    <Toolbar>
+                        <IconButton
+                            size="large"
+                            edge="start"
+                            color="inherit"
+                            aria-label="open drawer"
+                            sx={{ mr: 2 }}
+                        >
+                            <MenuIcon />
+                        </IconButton>
+                        <Typography
+                            variant="h6"
+                            noWrap
+                            component="div"
+                            sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
+                        >
+                            {currentHeadLine()}
+                        </Typography>
+                        <Typography
+                            variant="h6"
+                            noWrap
+                            component="div"
+                            sx={{ display: 'flex', mr: 5 }}
+                        >
+                            <ShoppingCartIcon color='action' fontSize='large' sx={{ mr: 2 }} /> {totalPrice()}
+                        </Typography>
+                        {
+                            (nav.pathname === '/catalogue') ?
+                                <Search>
+                                    <SearchIconWrapper>
+                                        <SearchIcon />
+                                    </SearchIconWrapper>
+                                    <StyledInputBase
+                                        placeholder="Search…"
+                                        inputProps={{ 'aria-label': 'search' }}
+                                        onChange={handleSearchInputChange}
+                                        value={search}
+                                        autoFocus={true}
+                                    />
 
-                            </Search>
-                            :
-                            null
-                    }
-                </Toolbar>
-            </AppBar>
-        </Box>
+                                </Search>
+                                :
+                                null
+                        }
+                    </Toolbar>
+                </AppBar>
+            </Box> : null
     )
 }

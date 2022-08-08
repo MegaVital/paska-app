@@ -85,7 +85,7 @@ export const Catalogue: FC<Props> = () => {
     )
 
     const goHome = () => {
-        navigate(AppRoutes.HOME, { replace: true })
+        navigate(AppRoutes.LOGIN, { replace: true })
     }
 
     const goOrder = () => {
