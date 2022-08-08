@@ -26,11 +26,11 @@ export const Login: FC<Props> = () => {
                     <Typography variant="h6" sx={{ m: 2, ml: 0 }}>Password</Typography>
                     <TextField id="outlined-basic" variant="outlined" type="password" />
                 </Box>
-                <Button variant='contained' onClick={signIn} color='success' size='medium'
-                    sx={{ margin: 5 }}
+                <Button variant='contained' onClick={signIn} color='success' size='large'
+                    sx={{ margin: 2 }}
                 >Sign in</Button>
-                <Button variant='contained' onClick={signUp} color='primary' size='medium'
-                    sx={{ margin: 5 }}
+                <Button variant='contained' onClick={signUp} color='primary' size='large'
+                    sx={{ margin: 2 }}
                 >Create an account</Button>
             </Card>
         </Box>

@@ -29,11 +29,11 @@ export const Registration: FC<Props> = () => {
                 </Box>
                 <Button variant='contained'
                     // onClick={handlePressButton} 
-                    color='primary' size='medium'
-                    sx={{ margin: 5 }}
+                    color='primary' size='large'
+                    sx={{ margin: 2 }}
                 >Create an account</Button>
-                <Button variant='contained' onClick={back} color='error' size='medium'
-                    sx={{ margin: 5 }}
+                <Button variant='contained' onClick={back} color='error' size='large'
+                    sx={{ margin: 2 }}
                 >I'm stupid, I already have an account</Button>
             </Card>
         </Box>
