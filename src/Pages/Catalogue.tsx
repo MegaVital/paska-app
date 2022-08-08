@@ -48,17 +48,18 @@ export const Catalogue: FC<Props> = () => {
                         || el.brand.includes(searchState) || el.material.toString().includes(searchState) || el.size.includes(searchState))
                     )   return el            
                     })
-            .sort((a, b) => { 
-                if (sort === 'fromCheap')
-                 return a.price - b.price 
-            else if (sort === 'fromExp') 
-                return b.price - a.price
-                else if (a.title > b.title && sort === 'fromZtoA')
-                return -1
-                else if (b.title > a.title && sort === 'fromAtoZ')
-                return -1
-                else return 0
-            })
+            .sort((a, b) => {
+                switch (sort) {
+                    case 'fromCheap':
+                 return a.price - b.price ;
+            case 'fromExp': 
+                return b.price - a.price;
+                    case 'fromZtoA':
+                return -1;
+                    case 'fromAtoZ' :
+                return -1;
+                default: return 0
+     } })
                 })
     const filteredData = useAppSelector(state => state.persistedReducer.dataSlice.filter)
 
