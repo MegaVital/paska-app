@@ -26,7 +26,6 @@ export const Product: FC<Props> = () => {
 
     return (
         <div>
-            {/* <div className="pageTitle">{dataElement.title}</div> */}
             <Button variant="contained" onClick={goCatalogue} color='primary' size='medium' sx={{ marginLeft: '30px', marginBottom: '30px', mt: '30px' }}>Catalogue from product</Button>
             <Button variant="contained" onClick={goOrder} color='success' size='medium' sx={{ marginLeft: '30px', display: 'block' }}>Order</Button>
             <Card sx={{ maxWidth: 700, mt: 10, ml: 10 }}>

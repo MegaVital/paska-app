@@ -2,6 +2,7 @@ export interface CartActions {
     cartChanges: 'create' | 'addQuantity' | 'remove' | 'reduceQuantity';
 }
 
+
 export const changeCartContaining = (isElementQuantitySingle: boolean, isDeleting: boolean, cartIndex: number): CartActions['cartChanges'] => {
     let result: CartActions['cartChanges']
     if (!isDeleting) {

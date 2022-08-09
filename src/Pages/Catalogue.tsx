@@ -300,14 +300,14 @@ export const Catalogue: FC<Props> = () => {
     // const [dataFilter, setDataFilter] = useState<DataFilters>(initialFilters)
      
     // const newArray = dataFilter[propertyName as keyof DataFilters]
-        // if (!newArray.includes(containName)) { newArray.push(containName) }
-        // else {
-        //     newArray.splice(newArray.indexOf(containName), 1)
-        // }
-        // setDataFilter({
-        //     ...dataFilter,
-        //     [propertyName]: newArray,
-        // })
+    //     if (!newArray.includes(containName)) { newArray.push(containName) }
+    //     else {
+    //         newArray.splice(newArray.indexOf(containName), 1)
+    //     }
+    //     setDataFilter({
+    //         ...dataFilter,
+    //         [propertyName]: newArray,
+    //     })
 
         
 

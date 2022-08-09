@@ -1,4 +1,3 @@
-import { SelectChangeEvent } from '@mui/material';
 import { createSlice } from "@reduxjs/toolkit"
 import { CatalogueEntry, DataFilters } from "../types"
 
@@ -49,16 +48,12 @@ const dataSlice = createSlice({
         },
         searchTitleReducer(state: DataState, action: { payload: string }) {
             state.search = action.payload
-        },
-        sort(state: DataState, action: { payload: string }) {
-            state.sort = ''
         }
-
     }
 })
 
 
-export const { addData, addFilter, addPrice, filterShift, searchTitleReducer, sort } = dataSlice.actions
+export const { addData, addFilter, addPrice, filterShift, searchTitleReducer } = dataSlice.actions
 export default dataSlice.reducer
 
 // setDataFilter(

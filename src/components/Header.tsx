@@ -30,7 +30,6 @@ export const SearchBar: FunctionComponent<SearchBarProps> = () => {
                 return 'Product'
         }
     }
-    console.log(nav);
 
 
     const cart = useAppSelector(state => state.persistedReducer.cartSlice)
@@ -41,7 +40,7 @@ export const SearchBar: FunctionComponent<SearchBarProps> = () => {
 
     const [searchTitle, setSearchTitle] = useState<string>('')
 
-    const handleSearchInputChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
+    const handleSearchInputChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
         setSearchTitle(event.target.value)
     }
     dispatcher(searchTitleReducer(searchTitle))
