@@ -1,5 +1,5 @@
 import { FC} from "react";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { AppRoutes } from "../routerTypes";
 import { Button, Typography, List, ListItem } from '@mui/material';
 import "./pages.css"
@@ -16,7 +16,7 @@ export const Order: FC<OrderItemProps> = () => {
     const navigate = useNavigate()
     
     const serverData = useAppSelector(state => state.persistedReducer.dataSlice.data)
-    
+    const isLogIn = useAppSelector(state => state.persistedReducer.tokenSlice.isAuth)
     const cart = useAppSelector(state => state.persistedReducer.cartSlice)
 
     const quantity = (id: string) => {
@@ -87,31 +87,29 @@ export const Order: FC<OrderItemProps> = () => {
 
     return (
         <div>
+            {(!isLogIn) ? (<Navigate to="/" replace={true} />) : null}
             <Button variant='contained' onClick={goHome} color="primary" size='medium' sx={{ marginLeft: '30px', marginBottom: '30px', mt: '30px' }}>Move to Home</Button>
             <Button variant="contained" onClick={goCatalogue} color='success' size='medium' sx={{ marginLeft: '30px', display: 'block' }}>Move to Catalogue</Button>
             <Typography sx={{ mt: 8, mb: 4, textAlign: 'center', color: 'black' }} variant="h3" component="div">
                 Your cart:
             </Typography>
             <List sx={{ width: 700, margin: 'auto' }}>
-                {
-                    serverData.map((el, index) => {
-                        if (quantity(el.id))
-                            return <React.Fragment key={`order-item-${serverData[index].id}`}>
-                                <ListItem >
-                                    <OrderItem
-                                        key={serverData[index].id}
-                                        changeTotalValue={changeTotalValue}
-                                        {...el}
-                                        itemTotalPrice={itemTotalPrice}
-
-                                    />
-                                </ListItem>
-                                <Divider />
-                            </React.Fragment>
-                        else return null
-                    }
-                    )
+                {serverData.map((el, index) => {
+                    if (quantity(el.id))
+                        return <React.Fragment key={`order-item-${serverData[index].id}`}>
+                            <ListItem>
+                                <OrderItem
+                                    key={serverData[index].id}
+                                    changeTotalValue={changeTotalValue}
+                                    {...el}
+                                    itemTotalPrice={itemTotalPrice} />
+                            </ListItem>
+                            <Divider />
+                        </React.Fragment>;
+                    else
+                        return null;
                 }
+                )}
             </List>
             <div className="orderPrice">Total: {totalPrice()}$</div>
         </div>

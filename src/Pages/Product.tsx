@@ -1,6 +1,6 @@
 import { Accordion, AccordionDetails, AccordionSummary, Button, Card, CardActions, CardContent, Typography } from "@mui/material";
 import React, { FC } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { AppRoutes } from "../routerTypes";
 import "./pages.css"
 import "../service.helper.ts"
@@ -13,6 +13,7 @@ export const Product: FC<Props> = () => {
     const navigate = useNavigate()
     const params = useParams()
     const serverData = useAppSelector(state => state.persistedReducer.dataSlice.data)
+    const isLogIn = useAppSelector(state => state.persistedReducer.tokenSlice.isAuth)
 
     const goCatalogue = () => {
         navigate(AppRoutes.CATALOGUE)
@@ -26,6 +27,7 @@ export const Product: FC<Props> = () => {
 
     return (
         <div>
+            {(!isLogIn) ? (<Navigate to="/" replace={true} />) : null}
             <Button variant="contained" onClick={goCatalogue} color='primary' size='medium' sx={{ marginLeft: '30px', marginBottom: '30px', mt: '30px' }}>Catalogue from product</Button>
             <Button variant="contained" onClick={goOrder} color='success' size='medium' sx={{ marginLeft: '30px', display: 'block' }}>Order</Button>
             <Card sx={{ maxWidth: 700, mt: 10, ml: 10 }}>

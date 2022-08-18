@@ -6,6 +6,7 @@ import React from 'react';
 import { Registration } from "./Pages/Registration";
 export function Router() {
     return (
+
         <Routes >
             <Route path={AppRoutes.LOGIN} element={<Login />} />
             <Route path={AppRoutes.REGISTRATION} element={<Registration />} />
@@ -13,5 +14,6 @@ export function Router() {
             <Route path={AppRoutes.ORDER} element={<Order />} />
             <Route path={`${AppRoutes.PRODUCT}/:productID`} element={<Product />} />
         </Routes>
+
     )
 }

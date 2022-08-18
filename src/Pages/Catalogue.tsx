@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { Button, CircularProgress, FormControl, Grid, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material';
 import { CatalogueItem } from "../components/CatalogueItem";
 import { AppRoutes } from '../routerTypes';
@@ -13,17 +13,13 @@ import { FilterField } from "../components/FilterField";
 
 type Props = {}
 export const Catalogue: FC<Props> = () => {
-    
 
-    
     const navigate = useNavigate()
 
     const cart = useAppSelector(state => state.persistedReducer.cartSlice)
-    
-    const data = useAppSelector(state => state.persistedReducer.dataSlice.data)
+    const { data, search } = useAppSelector(state => state.persistedReducer.dataSlice)
+    const isLogIn = useAppSelector(state => state.persistedReducer.tokenSlice.isAuth)
 
-    const searchState = useAppSelector(state => state.persistedReducer.dataSlice.search)
-    
     const [sort, setSort] = useState('');
 
     const handleChange = (event: SelectChangeEvent) => {
@@ -33,7 +29,7 @@ export const Catalogue: FC<Props> = () => {
     const serverData = useAppSelector(state => {
         const { filter, data, price } = state.persistedReducer.dataSlice
         if (filter.Size.length === 0 && filter.Material.length === 0 && filter.Brand.length === 0 && price[0] === Math.min(...data.map(price => price.price))
-            && price[1] === Math.max(...data.map(price => price.price)) && !searchState && sort === '')
+            && price[1] === Math.max(...data.map(price => price.price)) && !search && sort === '')
             return data
             else 
             return data
@@ -44,8 +40,8 @@ export const Catalogue: FC<Props> = () => {
                         && el.price >= price[0]  
                         && el.price <= price[1]
                         && materialCheck(filter.Material, el.material)
-                        &&( el.title.includes(searchState)
-                        || el.brand.includes(searchState) || el.material.toString().includes(searchState) || el.size.includes(searchState))
+                        &&( el.title.includes(search)
+                        || el.brand.includes(search) || el.material.toString().includes(search) || el.size.includes(search))
                     )   return el            
                     })
                 .sort((a, b) => {
@@ -145,7 +141,6 @@ export const Catalogue: FC<Props> = () => {
         })
         return countedString
     };
-    console.log(letters('vvvvvvfffffffrrrrrrrrrrhpottttttt'));
    
     const itemTotalPrice = (id: string): number => {
         let currentCatalogueEntry = data.find(el => el.id === id)
@@ -157,6 +152,7 @@ export const Catalogue: FC<Props> = () => {
     
     return (
         <div>
+            {(!isLogIn) ? (<Navigate to ="/" replace = {true} />) : null}
             <Button variant='contained' onClick={goHome} color="primary" size='medium' sx={{ ml: '30px', mb: '0px', mt: '30px' }}>Move to Home</Button>
             <Grid sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
                 <Button variant="contained" onClick={goOrder} color='success' size='medium' sx={{ marginLeft: '30px', mt: '30px ', textAlign: 'left' }}>Move to Order</Button>

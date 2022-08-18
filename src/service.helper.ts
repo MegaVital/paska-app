@@ -2,7 +2,6 @@ export interface CartActions {
     cartChanges: 'create' | 'addQuantity' | 'remove' | 'reduceQuantity';
 }
 
-
 export const changeCartContaining = (isElementQuantitySingle: boolean, isDeleting: boolean, cartIndex: number): CartActions['cartChanges'] => {
     let result: CartActions['cartChanges']
     if (!isDeleting) {
@@ -27,6 +26,7 @@ export function request(url: string, method: string, body?: object) {
     }).then(response => response.json())
     );
 }
+
 
 
 export const filter = [
@@ -87,6 +87,18 @@ export const brandCheck = (filter: string[], dataBrand: string): boolean => {
     filter.forEach((el) => {
         if (dataBrand.includes(el)) result = true
     })
+    return result
+}
+export const nameAndEmail = (nAe: string[], field: string): boolean => {
+
+    let result = false
+    nAe.forEach((el) => {
+        if (el.includes(field)) result = true
+        console.log('EL', el);
+        console.log('FIELD', field);
+    })
+
+
     return result
 }
 

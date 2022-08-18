@@ -19,3 +19,19 @@ export interface DataFilters {
     Size: string[],
     Material: string[]
 }
+export interface RegistrationFields {
+    name: string,
+    email: string,
+    password: string,
+    passwordCheck: string;
+}
+export interface LogInFields {
+    nameOrEmail: string
+    pass: string
+}
+export interface blurInitialStateInterface {
+    name: boolean,
+    email: boolean,
+    pass: boolean,
+    pass2: boolean,
+}
