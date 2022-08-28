@@ -27,11 +27,16 @@ export interface RegistrationFields {
 }
 export interface LogInFields {
     nameOrEmail: string
-    pass: string
+    password: string
 }
 export interface blurInitialStateInterface {
     name: boolean,
     email: boolean,
-    pass: boolean,
-    pass2: boolean,
+    password: boolean,
+    passwordCheck: boolean,
+}
+export interface ErrorState {
+    nameError: boolean,
+    emailError: boolean,
+    passwordError: boolean
 }

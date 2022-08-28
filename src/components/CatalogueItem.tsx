@@ -29,20 +29,20 @@ export const CatalogueItem: FunctionComponent<CatalogueItemProps> = ({ title, de
         })
 
     return (
-        <Card variant="elevation" sx={{ width: '250px', height: 'auto' }}  >
+        <Card raised variant="elevation" sx={{ width: '250px', height: 'auto' }}  >
             <CardContent onClick={() => { goProduct(id) }}>
                 <img id='base64image' width={200} height={200} src={image} />
             </CardContent>
             <CardContent onClick={() => { goProduct(id) }}>
-                <Tooltip title={title} placement='top-start'>
-                    <div className="titleText">
-                        {title}
+                <div className="titleText">
+                    {title}
+                </div>
+                <div className='brandName'>by {brand}</div>
+                <Tooltip title={description}>
+                    <div className="descriptionText">
+                        {description}
                     </div>
                 </Tooltip>
-                <div className='brandName'>by {brand}</div>
-                <div className="descriptionText">
-                    {description}
-                </div>
                 <div className="materialText">
                     Material: {material.join(', ')}
                 </div>
@@ -89,12 +89,3 @@ export const CatalogueItem: FunctionComponent<CatalogueItemProps> = ({ title, de
         </Card >
     )
 }
-
-// function isEllipsisActive() {
-//     const x = document.getElementsByClassName('titleText')[1];
-//     if (x) {
-
-
-//     }
-//     return x && (x.clientWidth < x.scrollWidth);
-// }

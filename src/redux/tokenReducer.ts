@@ -13,25 +13,25 @@ const initialState: TokenState = {
     currentToken: '',
     isAuth: false
 }
+
 const tokenSlice = createSlice({
     name: 'token',
     initialState,
     reducers: {
         addToken(state: TokenState, action: { payload: TokenState }) {
-            {
-                state.id = action.payload.id,
-                    state.name = action.payload.name,
-                    state.currentToken = action.payload.currentToken,
-                    state.isAuth = action.payload.isAuth
-            }
+
+            state.id = action.payload.id
+            state.name = action.payload.name
+            state.currentToken = action.payload.currentToken
+            state.isAuth = action.payload.isAuth
+
         },
         deleteToken(state: TokenState) {
-            {
-                state.id = '',
-                    state.name = '',
-                    state.currentToken = '',
-                    state.isAuth = false
-            }
+            state.id = ''
+            state.name = ''
+            state.currentToken = ''
+            state.isAuth = false
+
         },
 
     }

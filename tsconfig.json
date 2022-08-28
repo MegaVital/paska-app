@@ -23,7 +23,7 @@
   "include": [
     "src", 
     "assets"
-  ],
+, "src/shared.ts", "src/google-api-auth.ts"  ],
    "baseUrl": "./",
     "paths": {
       "src/*": [

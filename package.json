@@ -12,13 +12,21 @@
     "@testing-library/react": "^12.1.4",
     "@testing-library/user-event": "^13.5.0",
     "@types/jest": "^27.4.1",
-    "@types/node": "^16.11.26",
+    "@types/node": "^16.11.50",
     "@types/react": "^17.0.43",
     "@types/react-dom": "^17.0.14",
+    "@types/yargs": "^17.0.11",
+    "axios": "^0.27.2",
     "bcryptjs": "^2.4.3",
+    "bootstrap": "^5.2.0",
+    "gapi-script": "^1.2.0",
+    "googleapis": "^106.0.0",
     "jsonwebtoken": "^8.5.1",
+    "notistack": "^2.0.5",
     "react": "^18.2.0",
+    "react-bootstrap": "^2.5.0",
     "react-dom": "^18.0.0",
+    "react-google-login": "^5.2.2",
     "react-redux": "^8.0.2",
     "react-router-dom": "^6.2.2",
     "react-scripts": "^2.1.3",
@@ -27,14 +35,17 @@
     "redux-session-storage": "^2.0.1",
     "reselect": "^4.1.6",
     "styled-components": "^5.3.5",
-    "typescript": "^4.6.3",
-    "web-vitals": "^2.1.4"
+    "ts-node": "^10.9.1",
+    "typescript": "^4.7.4",
+    "web-vitals": "^2.1.4",
+    "yargs": "^17.5.1"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "google-api-auth": "ts-node google-api-auth.ts"
   },
   "eslintConfig": {
     "extends": [
@@ -59,5 +70,18 @@
     "@types/bcryptjs": "^2.4.2",
     "@types/jsonwebtoken": "^8.5.8",
     "@types/react-router-dom": "^5.3.3"
-  }
+  },
+  "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MegaVital/paska-app.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MegaVital/paska-app/issues"
+  },
+  "homepage": "https://github.com/MegaVital/paska-app#readme"
 }

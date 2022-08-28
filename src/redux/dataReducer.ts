@@ -48,12 +48,19 @@ const dataSlice = createSlice({
         },
         searchTitleReducer(state: DataState, action: { payload: string }) {
             state.search = action.payload
+        },
+        clearDataSlice(state: DataState) {
+            state.filter = initialFilters,
+                state.sort = '',
+                state.price = [Math.min(...state.data.map(el => el.price)), Math.max(...state.data.map(el => el.price))],
+                state.search = '',
+                state.data.length = 0
         }
     }
 })
 
 
-export const { addData, addFilter, addPrice, filterShift, searchTitleReducer } = dataSlice.actions
+export const { addData, addFilter, addPrice, filterShift, searchTitleReducer, clearDataSlice } = dataSlice.actions
 export default dataSlice.reducer
 
 // setDataFilter(

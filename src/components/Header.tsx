@@ -2,20 +2,19 @@ import * as React from 'react';
 import { styled, alpha } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
-import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { FunctionComponent, useState } from 'react';
-import { AppBar, Link } from '@mui/material';
+import { FunctionComponent, useEffect, useState } from 'react';
+import { AppBar, Button, Dialog, DialogActions, DialogTitle, IconButton, Link } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { searchTitleReducer } from '../redux/dataReducer';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { clearDataSlice, searchTitleReducer } from '../redux/dataReducer';
 import { deleteToken } from '../redux/tokenReducer';
 import { AppRoutes } from '../routerTypes';
-
+import HomeIcon from '@mui/icons-material/Home';
+import { clearCartSlice } from '../redux/cartReducer';
 
 type SearchBarProps = {}
 
@@ -32,9 +31,11 @@ export const SearchBar: FunctionComponent<SearchBarProps> = () => {
                 return 'Product'
         }
     }
+    const goHome = () => {
+        navigate(AppRoutes.LOGIN)
+    }
     const navigate = useNavigate()
     const dispatcher = useAppDispatch()
-
     const cart = useAppSelector(state => state.persistedReducer.cartSlice)
     const { data, search } = useAppSelector(state => state.persistedReducer.dataSlice)
     const tokenState = useAppSelector(state => state.persistedReducer.tokenSlice)
@@ -45,9 +46,19 @@ export const SearchBar: FunctionComponent<SearchBarProps> = () => {
     }
     dispatcher(searchTitleReducer(searchTitle))
 
+    const [open, setOpen] = useState(false);
+
     const logOut = () => {
+        dispatcher(clearCartSlice())
+        dispatcher(clearDataSlice())
         dispatcher(deleteToken())
-        navigate(AppRoutes.LOGIN, { replace: true })
+        setOpen(false)
+    }
+
+    // const goBack = () => { navigate(-1) }
+
+    const goOrder = () => {
+        navigate(AppRoutes.ORDER)
     }
 
     const Search = styled('div')(({ theme }) => ({
@@ -101,26 +112,26 @@ export const SearchBar: FunctionComponent<SearchBarProps> = () => {
     return (
         (nav.pathname !== '/' && nav.pathname !== '/registration') ?
             <Box sx={{ flexGrow: 1 }}>
-                <AppBar position="static">
+                <AppBar position="static" color='secondary'>
                     <Toolbar>
-                        <IconButton
-                            size="large"
-                            edge="start"
-                            color="inherit"
-                            aria-label="open drawer"
-                            sx={{ mr: 2 }}
-                        >
-                            <MenuIcon />
-                        </IconButton>
+                        {(nav.pathname !== '/catalogue') ?
+                            // <IconButton aria-label='back'
+                            //     onClick={goBack}>
+                            //     <ArrowBackIcon fontSize='large' />
+                            // </IconButton>
+                            <IconButton aria-label='home'
+                                onClick={goHome}>
+                                <HomeIcon fontSize='large' />
+                            </IconButton> : null}
+                        <Link component="button" onClick={logOut}></Link>
                         <Typography
                             variant="h6"
                             noWrap
                             component="div"
-                            sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
+                            sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' }, ml: 3 }}
                         >
                             {currentHeadLine()}
                         </Typography>
-
                         <Typography
                             variant="h6"
                             noWrap
@@ -129,15 +140,30 @@ export const SearchBar: FunctionComponent<SearchBarProps> = () => {
                         >
                             {tokenState.name}
                         </Typography>
-                        <Link component="button" onClick={logOut} sx={{ color: 'white', mr: 5, ml: 2 }} >(Log out)</Link>
-                        <Typography
-                            variant="h6"
-                            noWrap
-                            component="div"
-                            sx={{ display: 'flex', mr: 5 }}
-                        >
-                            <ShoppingCartIcon color='action' fontSize='large' sx={{ mr: 2 }} /> {totalPrice()}
-                        </Typography>
+                        <Link component="button" onClick={() => { setOpen(true) }} sx={{ color: 'white', mr: 5, ml: 2 }} >(Log out)</Link>
+                        <Dialog
+                            open={open}
+                            onClose={() => { setOpen(false) }}
+                            aria-describedby="alert-dialog-log-out">
+                            <DialogTitle> Are you sure you want to leave?</DialogTitle>
+                            <DialogActions>
+                                <Button autoFocus onClick={logOut}>Yes</Button>
+                                <Button onClick={() => setOpen(false)}>Cancel</Button>
+
+                            </DialogActions>
+                        </Dialog>
+                        <IconButton aria-label='cart' onClick={goOrder}>
+                            <ShoppingCartIcon color='action' fontSize='large' sx={{ mr: 2 }} />
+                            <Typography
+                                variant="h6"
+                                noWrap
+                                component="div"
+                                sx={{ display: 'flex', mr: 5 }}
+                            >
+
+                                {totalPrice()}
+                            </Typography>
+                        </IconButton>
                         {
                             (nav.pathname === '/catalogue') ?
                                 <Search>

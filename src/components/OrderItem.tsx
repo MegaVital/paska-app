@@ -102,15 +102,3 @@ export const OrderItem: FunctionComponent<OrderItemProps> = ({ title, changeTota
 
     )
 }
-
-
-// function isEllipsisActive() {
-//     const x = document.getElementsByClassName('titleText')[1];
-//     if (x) {
-//
-
-//     }
-//     return x && (x.clientWidth < x.scrollWidth);
-// } 
-
-

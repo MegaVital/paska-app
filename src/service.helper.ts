@@ -18,10 +18,13 @@ export const changeCartContaining = (isElementQuantitySingle: boolean, isDeletin
     return result
 }
 
-export function request(url: string, method: string, body?: object) {
+export function request(url: string, method: string, body?: object, token?: string) {
     return (fetch(`http://localhost:1111/${url}`, {
         method: method,
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        },
         body: JSON.stringify(body),
     }).then(response => response.json())
     );
