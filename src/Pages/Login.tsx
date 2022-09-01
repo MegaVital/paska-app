@@ -5,24 +5,22 @@ import { AppRoutes } from "../routerTypes";
 import "./pages.css"
 import { LogInFields } from "../types";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import bcrypt from 'bcryptjs'
-import { request } from "../service.helper";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
-import { addToken, deleteToken } from "../redux/tokenReducer";
+import { addToken } from "../redux/tokenReducer";
 import JWT from 'jsonwebtoken'
 const jwt = require('jsonwebtoken')
 import 'bootstrap/dist/css/bootstrap.min.css'
-import { GoogleLogin, GoogleLogout } from 'react-google-login';
+import { GoogleLogin } from 'react-google-login';
 import { gapi } from 'gapi-script';
-import { GoogleAuth } from "google-auth-library";
 const axios = require('axios').default
+const clientId = '20193487866-88r5prmk0l03f52dsel598o3ts2udeti.apps.googleusercontent.com'
+
 
 type Props = {}
 
 export const Login: FC<Props> = () => {
     const navigate = useNavigate()
     const dispatcher = useAppDispatch()
-
     const tokenState = useAppSelector(state => state.persistedReducer.tokenSlice)
 
     const signUp = () => {
@@ -48,28 +46,6 @@ export const Login: FC<Props> = () => {
     const handleClickShowPassword = () => setShowPassword(!showPassword);
     const handleMouseDownPassword = () => setShowPassword(!showPassword);
 
-    const signIn = async () => {
-        const { success, token, error } = await request('login', 'POST', {
-            login: logInFields.nameOrEmail.split(' ').join(''),
-            password: logInFields.password
-        })
-        const currentToken = jwt.sign({ foo: 'bar' }, 'secretKey1')
-        const userData = JWT.verify(token, 'secretKey1')
-        const jwtData = userData as JWT.JwtPayload
-        delete jwtData.exp
-        delete jwtData.iat
-        const name = jwtData['name']
-        const id = jwtData['id']
-
-        if (success) {
-            dispatcher(addToken({ id, name, currentToken, isAuth: true }))
-        }
-        else {
-            setErrorText(error['message'])
-
-        }
-    }
-
     useEffect(() => {
         const initClient = () => {
             gapi.auth2.init({
@@ -81,58 +57,54 @@ export const Login: FC<Props> = () => {
 
     }, []);
 
+    const signIn = () => {
+        axios.post('http://localhost:1111/login', {
+            login: logInFields.nameOrEmail.split(' ').join(''),
+            password: logInFields.password
+        }).then(function (response: any) {
+            const currentToken = response['data']['token'];
+            const userData = JWT.verify(currentToken, 'secretKey1')
+            const jwtData = userData as JWT.JwtPayload
+            console.log(jwtData);
 
-    // const success = () => {
-    //     
-    //     axios.post('/users', {
-    //         ID: googleID
-    //     })
+            delete jwtData.exp
+            delete jwtData.iat
+            const name = jwtData['name']
+            const id = jwtData['id']
+            console.log(jwtData);
+            dispatcher(addToken({ id, name, currentToken, isAuth: true }))
+        })
+            .catch(function (error: any) {
+                setErrorText(error['message'])
+            });
+    }
 
-    //         .then(function (response: any) {
-    //             console.log(response);
-    //         })
-    //         .catch(function (error: any) {
-    //             console.log(error);
-    //         });
-    // }
-    // console.log(success);
-
-    const onSuccess = async (res: any) => {
-        const id = res['googleId']
-        const name = res['wt']['Ad']
-        const email = res['profileObj']['email']
-        const { success, token, error } = await request('googlelogin', 'POST', {
+    const onSuccess = async (response: any) => {
+        const id = response['googleId']
+        const name = response['wt']['Ad']
+        const email = response['profileObj']['email']
+        axios.post('http://localhost:1111/googlelogin', {
             google_id: id,
             name: name,
             email: email
-        })
-        const currentToken = jwt.sign({ foo: 'bar' }, 'secretKey1')
-        const userData = JWT.verify(token, 'secretKey1')
-        const jwtData = userData as JWT.JwtPayload
-        delete jwtData.exp
-        delete jwtData.iat
-
-        if (success) {
+        }).then(function (response: any) {
+            const currentToken = response['data']['token'];
+            const userData = JWT.verify(currentToken, 'secretKey1')
+            const jwtData = userData as JWT.JwtPayload
+            delete jwtData.exp
+            delete jwtData.iat
+            console.log(jwtData);
             dispatcher(addToken({ id, name, currentToken, isAuth: true }))
-        }
-        else {
-            setErrorText(error['message'])
-
-        }
+        })
+            .catch(function (error: any) {
+                setErrorText(error['message'])
+            });
     }
 
     const onFailure = (err: any) => {
         setErrorText(err);
 
     };
-    // const logOut = () => {
-    //     dispatcher(clearCartSlice())
-    //     dispatcher(clearDataSlice())
-    //     dispatcher(deleteToken())
-
-    // };
-    const clientId = '20193487866-88r5prmk0l03f52dsel598o3ts2udeti.apps.googleusercontent.com'
-
 
     return (
         <Box sx={{ justifyContent: 'center', display: 'grid', mt: 30 }}>
@@ -176,20 +148,15 @@ export const Login: FC<Props> = () => {
                     <Button variant='contained' onClick={signUp} color='primary' size='large'
                         sx={{ margin: 2, mb: 0 }}
                     >Create an account</Button>
-                    {/* {(tokenState.isAuth) ? <GoogleLogout clientId={clientId} buttonText="Log out" onLogoutSuccess={logOut} /> : */}
                 </Box>
-
                 <GoogleLogin
                     clientId={clientId}
                     buttonText="Sign in with Google"
                     onSuccess={onSuccess}
                     onFailure={onFailure}
                     cookiePolicy={'single_host_origin'}
-
                 />
-                {/* } */}
             </Card>
         </Box>
-
     )
 }

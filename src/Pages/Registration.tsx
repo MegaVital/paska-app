@@ -3,13 +3,13 @@ import { useNavigate } from "react-router-dom";
 import { Alert, Box, Button, Card, IconButton, InputAdornment, Snackbar, TextField, Typography } from '@mui/material';
 import { AppRoutes } from "../routerTypes";
 import "./pages.css"
-import { request } from "../service.helper";
 import { blurInitialStateInterface, RegistrationFields } from "../types";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import JWT from 'jsonwebtoken'
 import bcrypt from 'bcryptjs'
-import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import { useAppDispatch } from "../redux/hooks";
 import { addToken } from "../redux/tokenReducer";
+import axios from "axios";
 const jwt = require('jsonwebtoken')
 const salt = bcrypt.genSaltSync(10);
 
@@ -21,8 +21,6 @@ export const Registration: FC<Props> = () => {
     const back = () => {
         navigate(AppRoutes.LOGIN)
     }
-    const tokenState = useAppSelector(state => state.persistedReducer.tokenSlice)
-
     const [errorText, setErrorText] = useState('')
 
     const initialFields: RegistrationFields = {
@@ -31,7 +29,6 @@ export const Registration: FC<Props> = () => {
         password: '',
         passwordCheck: ''
     }
-
 
     const [registrationFields, setRegistrationFields] = useState<RegistrationFields>(initialFields)
     const handleRegistrationFieldsInput = (fieldValue: string, propertyName: string) => {
@@ -57,26 +54,24 @@ export const Registration: FC<Props> = () => {
         return re.test(pass);
     };
 
-    const createAccountButton = async () => {
-        const { success, token, error } = await request('registration', 'POST', {
+    const createAccountButton = () => {
+        axios.post('http://localhost:1111/registration', {
             name: registrationFields.name.split(' ').join(''),
             email: registrationFields.email.split(' ').join(''),
             password: bcrypt.hashSync(registrationFields.password, salt)
-        })
-
-        if (success) {
-            const userData = JWT.verify(token, 'secretKey1')
+        }).then(function (response: any) {
+            const currentToken = response['data']['token'];
+            const userData = JWT.verify(currentToken, 'secretKey1')
             const jwtData = userData as JWT.JwtPayload
             delete jwtData.exp
             delete jwtData.iat
-            const currentToken = jwt.sign({ foo: 'bar' }, 'secretKey1')
             const name = jwtData['name']
             const id = jwtData['id']
-
             dispatcher(addToken({ id, name, currentToken, isAuth: true }))
-            navigate(AppRoutes.CATALOGUE, { replace: true, state: tokenState.currentToken })
-        }
-        else setErrorText(error['message'])
+        })
+            .catch(function (error: any) {
+                setErrorText(error['message'])
+            });
     }
 
     const blurInitialState: blurInitialStateInterface = {
@@ -94,7 +89,6 @@ export const Registration: FC<Props> = () => {
     }
 
     return (
-
         <Box sx={{ justifyContent: 'center', display: 'grid', mt: 20 }}>
             <Typography variant="h4" sx={{ textAlign: 'center', mb: 2 }}>Welcome!</Typography>
             <Card variant='elevation' raised sx={{ height: 'auto', width: 500, backgroundColor: 'whitesmoke', display: 'flex', flexDirection: 'column' }}>
@@ -105,7 +99,6 @@ export const Registration: FC<Props> = () => {
                         onChange={(event) => {
                             handleRegistrationFieldsInput(event.target.value, 'name')
                         }}
-                        // focused={}
                         error={(blur.name === true && registrationFields.name.length < 5) ? true : false}
                         onBlur={() => { onBlur('name', true) }}
                         value={registrationFields.name} />
@@ -131,7 +124,7 @@ export const Registration: FC<Props> = () => {
                         value={registrationFields.password}
                         label='Password'
                         onBlur={() => { onBlur('password', true) }}
-                        error={(blur.password || blur.passwordCheck) && (!validatePass(registrationFields.password) || !validatePass(registrationFields.passwordCheck))}
+                        error={blur.password && !validatePass(registrationFields.password)}
                         InputProps={{
                             endAdornment: (
                                 <InputAdornment position="end">
@@ -152,7 +145,7 @@ export const Registration: FC<Props> = () => {
                         }}
                         value={registrationFields.passwordCheck}
                         label='Password Check'
-                        error={(blur.password || blur.passwordCheck) && (!validatePass(registrationFields.password) || (!validatePass(registrationFields.passwordCheck)))}
+                        error={blur.passwordCheck && !validatePass(registrationFields.passwordCheck)}
                         onBlur={() => { onBlur('passwordCheck', true) }}
                         InputProps={{
                             endAdornment: (
@@ -169,7 +162,7 @@ export const Registration: FC<Props> = () => {
                         }} />
                     {(registrationFields.password.length > 0 && registrationFields.passwordCheck.length > 0 && !validatePass(registrationFields.password) && ((blur.passwordCheck) || (blur.password)))
                         ? <Alert severity="error">Invalid password</Alert>
-                        : (blur.password && (!validatePass(registrationFields.password) || !validatePass(registrationFields.passwordCheck)) && registrationFields.password.length > 0 && registrationFields.passwordCheck.length > 0)
+                        : (blur.password && (registrationFields.password !== registrationFields.passwordCheck) && registrationFields.password.length > 0 && registrationFields.passwordCheck.length > 0)
                             ? <Alert severity="error">Both fields should be identical</Alert>
                             : (validatePass(registrationFields.password) && validatePass(registrationFields.passwordCheck) && registrationFields.password === registrationFields.passwordCheck)
                                 ? <Alert severity="success">Password is Ok</Alert>
@@ -193,6 +186,5 @@ export const Registration: FC<Props> = () => {
                 {((!validatePass(registrationFields.password) || !validatePass(registrationFields.passwordCheck)) && blur.password) ? <Alert severity="info">The password should contain at least one uppercase letter, one lowercase letter and one digit</Alert> : <Box sx={{ height: '68px' }} />}
             </Card>
         </Box>
-
     )
 }

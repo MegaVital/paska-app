@@ -1,15 +1,16 @@
 import React, { FC, useEffect, useState } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
-import { Box, Button, CircularProgress, FormControl, Grid, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material';
+import { useNavigate } from "react-router-dom";
+import { Box, CircularProgress, FormControl, Grid, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material';
 import { CatalogueItem } from "../components/CatalogueItem";
-import { AppRoutes } from '../routerTypes';
 import "./pages.css"
-import { changeCartContaining, CartActions, request, materialCheck } from "../service.helper";
+import { changeCartContaining, CartActions, materialCheck } from "../service.helper";
 import { CatalogueEntry } from "../types";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { addItemToCart, deleteItemFromCart, addQuantity, reduceQuantity } from "../redux/cartReducer";
 import { addData } from '../redux/dataReducer'
 import { FilterField } from "../components/FilterField";
+import { addToken } from "../redux/tokenReducer";
+import axios from "axios";
 
 type Props = {}
 export const Catalogue: FC<Props> = () => {
@@ -20,6 +21,9 @@ export const Catalogue: FC<Props> = () => {
     const { data, search } = useAppSelector(state => state.persistedReducer.dataSlice)
     const tokenUser = useAppSelector(state => state.persistedReducer.tokenSlice.currentToken)
     const filteredData = useAppSelector(state => state.persistedReducer.dataSlice.filter)
+    const tokenState = useAppSelector(state => state.persistedReducer.tokenSlice)
+
+    console.log(tokenState);
 
     const [sort, setSort] = useState('');
 
@@ -41,8 +45,10 @@ export const Catalogue: FC<Props> = () => {
                         && el.price >= price[0]
                         && el.price <= price[1]
                         && materialCheck(filter.Material, el.material)
-                        && (el.title.includes(search)
-                            || el.brand.includes(search) || el.material.toString().includes(search) || el.size.includes(search))
+                        && (el.title.toLocaleLowerCase().includes(search.toLocaleLowerCase())
+                            || el.brand.toLocaleLowerCase().includes(search.toLocaleLowerCase())
+                            || el.material.toString().toLocaleLowerCase().includes(search.toLocaleLowerCase())
+                            || el.size.toLocaleLowerCase().includes(search.toLocaleLowerCase()))
                     ) return el
                 })
                 .sort((a, b) => {
@@ -62,26 +68,32 @@ export const Catalogue: FC<Props> = () => {
 
     const asyncFN2000 = async () => {
         setIsLoading(true)
-
-        const res = await fetch('http://localhost:1111/data', {
-            method: 'GET',
+        axios.get('http://localhost:1111/data', {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${tokenUser}`
             }
-        }).then(response => response.json()) as CatalogueEntry[]
-        res.forEach((el, index) => {
-            res[index].image = 'data:image/jpeg;base64,' + res[index].image
+        }).then((response: any) => {
+            const data = response.data['data'] as CatalogueEntry[]
+            data.forEach((el, index) => {
+                data[index].image = 'data:image/jpeg;base64,' + data[index].image
+            })
+            dispatcher(addData(data))
+            const bearer = response.data.newToken.split(' ')
+            const currentToken = bearer[1]
+            dispatcher(addToken({ ...tokenState, currentToken }))
+
         })
-        dispatcher(addData(res))
+
+
+
         setIsLoading(false)
     }
 
     useEffect(
         () => {
-            if (data.length === 0) {
-                asyncFN2000()
-            }
+            asyncFN2000()
+
         }, [filteredData]
     )
 
