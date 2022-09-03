@@ -21,7 +21,6 @@ type Props = {}
 export const Login: FC<Props> = () => {
     const navigate = useNavigate()
     const dispatcher = useAppDispatch()
-    const tokenState = useAppSelector(state => state.persistedReducer.tokenSlice)
 
     const signUp = () => {
         navigate(AppRoutes.REGISTRATION)

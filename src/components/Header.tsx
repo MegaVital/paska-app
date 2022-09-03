@@ -55,8 +55,6 @@ export const SearchBar: FunctionComponent<SearchBarProps> = () => {
         setOpen(false)
     }
 
-    // const goBack = () => { navigate(-1) }
-
     const goOrder = () => {
         navigate(AppRoutes.ORDER)
     }
@@ -93,7 +91,6 @@ export const SearchBar: FunctionComponent<SearchBarProps> = () => {
             // vertical padding + font size from searchIcon
             paddingLeft: `calc(1em + ${theme.spacing(4)})`,
             width: '100%',
-
         },
     }));
 
@@ -115,10 +112,6 @@ export const SearchBar: FunctionComponent<SearchBarProps> = () => {
                 <AppBar position="static" color='secondary'>
                     <Toolbar>
                         {(nav.pathname !== '/catalogue') ?
-                            // <IconButton aria-label='back'
-                            //     onClick={goBack}>
-                            //     <ArrowBackIcon fontSize='large' />
-                            // </IconButton>
                             <IconButton aria-label='home'
                                 onClick={goHome}>
                                 <HomeIcon fontSize='large' />
@@ -149,7 +142,6 @@ export const SearchBar: FunctionComponent<SearchBarProps> = () => {
                             <DialogActions>
                                 <Button autoFocus onClick={logOut}>Yes</Button>
                                 <Button onClick={() => setOpen(false)}>Cancel</Button>
-
                             </DialogActions>
                         </Dialog>
                         <IconButton aria-label='cart' onClick={goOrder}>
@@ -160,7 +152,6 @@ export const SearchBar: FunctionComponent<SearchBarProps> = () => {
                                 component="div"
                                 sx={{ display: 'flex', mr: 5 }}
                             >
-
                                 {totalPrice()}
                             </Typography>
                         </IconButton>
@@ -177,7 +168,6 @@ export const SearchBar: FunctionComponent<SearchBarProps> = () => {
                                         value={search}
                                         autoFocus={true}
                                     />
-
                                 </Search>
                                 :
                                 null

@@ -1,6 +1,6 @@
 import { Accordion, AccordionDetails, AccordionSummary, Card, CardActions, CardContent, Typography } from "@mui/material";
 import React, { FC } from "react";
-import { Navigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import "./pages.css"
 import "../service.helper.ts"
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -11,7 +11,6 @@ type Props = {}
 export const Product: FC<Props> = () => {
     const params = useParams()
     const serverData = useAppSelector(state => state.persistedReducer.dataSlice.data)
-    const isLogIn = useAppSelector(state => state.persistedReducer.tokenSlice.isAuth)
     const dataElement = serverData.find(el => el.id === params.productID)!
 
     return (

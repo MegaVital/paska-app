@@ -15,8 +15,6 @@ const initialFilters: DataFilters = {
     Material: [],
 }
 
-
-
 const initialState: DataState = { data: [], filter: initialFilters, price: [], search: '', sort: '' }
 const dataSlice = createSlice({
     name: 'data',
@@ -36,7 +34,6 @@ const dataSlice = createSlice({
             else {
                 state.filter[action.payload.propertyName as keyof DataFilters].splice(state.filter[action.payload.propertyName as keyof DataFilters].indexOf(action.payload.containName), 1)
             }
-
         },
         addPrice(state: DataState, action: { payload: number[] }) {
             state.price = [...action.payload]
@@ -59,13 +56,5 @@ const dataSlice = createSlice({
     }
 })
 
-
 export const { addData, addFilter, addPrice, filterShift, searchTitleReducer, clearDataSlice } = dataSlice.actions
 export default dataSlice.reducer
-
-// setDataFilter(
-            //     {
-            //         ...dataFilter,
-            //         [propertyName]: newArray,
-            //     }
-            // )

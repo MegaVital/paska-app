@@ -27,7 +27,6 @@ export const FilterField: FunctionComponent<FilterFieldProps> = () => {
     };
     const applyPrice = () => {
         dispatcher(addPrice(slider))
-
     }
 
     return (
@@ -71,7 +70,6 @@ export const FilterField: FunctionComponent<FilterFieldProps> = () => {
                     onChange={handleChangeSlider}
                     value={slider}
                 />
-
                 <Button variant="contained" color='primary' size='medium'
                     onClick={applyPrice}
                     sx={{ width: '30px', justifySelf: 'right' }}>Apply</Button></Card>
@@ -80,7 +78,7 @@ export const FilterField: FunctionComponent<FilterFieldProps> = () => {
                     dispatcher(filterShift())
                     setSlider([min, max])
                 }}
-                sx={{ width: 'auto', justifySelf: 'center', mt: '10px' }}>Clear filter</Button>   </Grid>
-
+                sx={{ width: 'auto', justifySelf: 'center', mt: '10px' }}>Clear filter</Button>
+            </Grid>
         </Box>)
 }

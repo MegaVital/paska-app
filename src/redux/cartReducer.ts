@@ -15,7 +15,6 @@ const cartSlice = createSlice({
     addQuantity(state: CartEntry[], action: { payload: { index: number } }) {
       state[action.payload.index].quantity += 1
     },
-
     deleteItemFromCart(state: CartEntry[], action: { payload: { index: number } }) {
       state.splice(action.payload.index, 1
       )

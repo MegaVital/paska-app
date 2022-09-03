@@ -1,7 +1,5 @@
 import { FC } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
-import { AppRoutes } from "../routerTypes";
-import { Button, Typography, List, ListItem } from '@mui/material';
+import { Typography, List, ListItem } from '@mui/material';
 import "./pages.css"
 import Divider from '@mui/material/Divider';
 import { OrderItem } from "../components/OrderItem";
@@ -16,7 +14,6 @@ export const Order: FC<OrderItemProps> = () => {
 
     const dispatcher = useAppDispatch()
     const serverData = useAppSelector(state => state.persistedReducer.dataSlice.data)
-    const isLogIn = useAppSelector(state => state.persistedReducer.tokenSlice.isAuth)
     const cart = useAppSelector(state => state.persistedReducer.cartSlice)
 
     const quantity = (id: string) => {
@@ -28,7 +25,6 @@ export const Order: FC<OrderItemProps> = () => {
             })
         return orderQuantity
     }
-
 
     const changeTotalValue = (id: string, isDeleting: boolean) => {
         const index = cart.findIndex(el => el.id === id)

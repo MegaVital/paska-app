@@ -9,7 +9,6 @@ type Props = {
 
 export const Button: FC<Props> = ({ text, handlePressButton, additionalContainerStyle }) => {
 
-
     return (
         <div onClick={handlePressButton ? handlePressButton : () => { }} className={`naviButton ${additionalContainerStyle}`}>
             <span className="buttonText">

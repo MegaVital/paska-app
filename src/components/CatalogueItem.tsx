@@ -5,7 +5,6 @@ import { Button, CardContent, Card, CardActions, Tooltip, IconButton } from "@mu
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import { useAppSelector } from "../redux/hooks";
 
-
 type CatalogueItemProps = {
     id: CatalogueEntry['id'],
     title: CatalogueEntry['title'],
