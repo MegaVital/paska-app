@@ -9,7 +9,7 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { FunctionComponent, useEffect, useState } from 'react';
 import { AppBar, Button, Dialog, DialogActions, DialogTitle, IconButton, Link } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { clearDataSlice, searchTitleReducer } from '../redux/dataReducer';
 import { deleteToken } from '../redux/tokenReducer';
 import { AppRoutes } from '../routerTypes';
@@ -105,6 +105,8 @@ export const SearchBar: FunctionComponent<SearchBarProps> = () => {
         if (sum === 0) { return 'Empty' }
         return sum + '$';
     }
+    const [time, setTime] = useState('')
+    useEffect(() => { setInterval(() => { setTime(new Date().toLocaleTimeString()) }, 1000) })
 
     return (
         (nav.pathname !== '/' && nav.pathname !== '/registration') ?
@@ -125,6 +127,8 @@ export const SearchBar: FunctionComponent<SearchBarProps> = () => {
                         >
                             {currentHeadLine()}
                         </Typography>
+                        <Typography variant='h6'
+                            component="div" sx={{ mr: 3 }}>{new Date().toLocaleDateString()} {time}</Typography>
                         <Typography
                             variant="h6"
                             noWrap
@@ -150,7 +154,7 @@ export const SearchBar: FunctionComponent<SearchBarProps> = () => {
                                 variant="h6"
                                 noWrap
                                 component="div"
-                                sx={{ display: 'flex', mr: 5 }}
+                                sx={{ display: 'flex', mr: 5, width: '70px' }}
                             >
                                 {totalPrice()}
                             </Typography>

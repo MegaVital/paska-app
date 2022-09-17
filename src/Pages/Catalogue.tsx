@@ -1,7 +1,6 @@
 import React, { FC, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Box, CircularProgress, FormControl, Grid, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material';
-import ClassCatalogueItem from "../components/ClassCatalogueItem";
 import { CatalogueItem } from "../components/CatalogueItem";
 import "./pages.css"
 import { changeCartContaining, CartActions, materialCheck } from "../service.helper";

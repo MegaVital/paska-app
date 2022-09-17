@@ -8,7 +8,6 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { addToken } from "../redux/tokenReducer";
 import JWT from 'jsonwebtoken'
-const jwt = require('jsonwebtoken')
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { GoogleLogin } from 'react-google-login';
 import { gapi } from 'gapi-script';
@@ -19,6 +18,7 @@ const clientId = '20193487866-88r5prmk0l03f52dsel598o3ts2udeti.apps.googleuserco
 type Props = {}
 
 export const Login: FC<Props> = () => {
+
     const navigate = useNavigate()
     const dispatcher = useAppDispatch()
 
@@ -64,13 +64,10 @@ export const Login: FC<Props> = () => {
             const currentToken = response['data']['token'];
             const userData = JWT.verify(currentToken, 'secretKey1')
             const jwtData = userData as JWT.JwtPayload
-            console.log(jwtData);
-
             delete jwtData.exp
             delete jwtData.iat
             const name = jwtData['name']
             const id = jwtData['id']
-            console.log(jwtData);
             dispatcher(addToken({ id, name, currentToken, isAuth: true }))
         })
             .catch(function (error: any) {
@@ -92,7 +89,6 @@ export const Login: FC<Props> = () => {
             const jwtData = userData as JWT.JwtPayload
             delete jwtData.exp
             delete jwtData.iat
-            console.log(jwtData);
             dispatcher(addToken({ id, name, currentToken, isAuth: true }))
         })
             .catch(function (error: any) {
