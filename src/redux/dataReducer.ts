@@ -21,7 +21,6 @@ const dataSlice = createSlice({
     initialState,
     reducers: {
         addData(state: DataState, action: { payload: CatalogueEntry[] }) {
-            // const { payload } = action
             state.data = [...action.payload]
             const max = Math.max(...action.payload.map(el => el.price))
             const min = Math.min(...action.payload.map(el => el.price))

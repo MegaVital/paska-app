@@ -10,7 +10,6 @@ import bcrypt from 'bcryptjs'
 import { useAppDispatch } from "../redux/hooks";
 import { addToken } from "../redux/tokenReducer";
 import axios from "axios";
-const jwt = require('jsonwebtoken')
 const salt = bcrypt.genSaltSync(10);
 
 type Props = {}
@@ -70,7 +69,7 @@ export const Registration: FC<Props> = () => {
             dispatcher(addToken({ id, name, currentToken, isAuth: true }))
         })
             .catch(function (error: any) {
-                setErrorText(error['message'])
+                setErrorText(error.response.data.error.message)
             });
     }
 
@@ -89,11 +88,11 @@ export const Registration: FC<Props> = () => {
     }
 
     return (
-        <Box sx={{ justifyContent: 'center', display: 'grid', mt: 20 }}>
-            <Typography variant="h4" sx={{ textAlign: 'center', mb: 2 }}>Welcome!</Typography>
-            <Card variant='elevation' raised sx={{ height: 'auto', width: 500, backgroundColor: 'whitesmoke', display: 'flex', flexDirection: 'column' }}>
-                <Box sx={{ margin: 5, display: 'grid' }}>
-                    <Typography variant="h6" sx={{ m: 2, ml: 0, mb: 0 }}>Name</Typography>
+        <Box sx={{ justifyContent: 'center', display: 'grid', mt: 8 }}>
+            <Typography variant="h4" sx={{ textAlign: 'center' }}>Welcome!</Typography>
+            <Card variant='elevation' raised sx={{ height: 'auto', width: 400, backgroundColor: 'whitesmoke', display: 'flex', flexDirection: 'column' }}>
+                <Box sx={{ margin: 6, mb: 1, display: 'grid' }}>
+                    <Typography variant="h6" sx={{ m: 1, ml: 0, mb: 0 }}>Name</Typography>
                     <Typography sx={{ m: 2, ml: 0, color: "grey", mt: 0, fontStyle: 'italic' }}>(at least 5 symbols)</Typography>
                     <TextField id="name" variant="outlined" sx={{ background: 'white' }} label='Name'
                         onChange={(event) => {
@@ -104,7 +103,7 @@ export const Registration: FC<Props> = () => {
                         value={registrationFields.name} />
                     {((blur.name === true && registrationFields.name.length < 5)) ? <Alert severity="error">Invalid name</Alert>
                         : <Box sx={{ height: '48px' }} />}
-                    <Typography variant="h6" sx={{ m: 2, ml: 0 }}>E-mail</Typography>
+                    <Typography variant="h6" sx={{ m: 1, ml: 0 }}>E-mail</Typography>
                     <TextField id="email" variant="outlined"
                         label='Type your E-mail' sx={{ background: 'white' }}
                         onChange={(event) => {
@@ -115,8 +114,8 @@ export const Registration: FC<Props> = () => {
                         value={registrationFields.email} />
                     {(blur.email === true && !validateEmail(registrationFields.email)) ? <Alert severity="error">Invalid email</Alert>
                         : <Box sx={{ height: '48px' }} />}
-                    <Typography variant="h6" sx={{ m: 2, ml: 0, mb: 0 }}>Password</Typography>
-                    <Typography sx={{ m: 2, ml: 0, color: "grey", mt: 0, fontStyle: 'italic' }}>(at least 8 symbols)</Typography>
+                    <Typography variant="h6" sx={{ m: 1, ml: 0, mb: 0 }}>Password</Typography>
+                    <Typography sx={{ m: 1, ml: 0, color: "grey", mt: 0, fontStyle: 'italic' }}>(at least 8 symbols)</Typography>
                     <TextField id="password" variant="outlined" sx={{ background: 'white' }} type={showPassword ? "text" : "password"}
                         onChange={(event) => {
                             handleRegistrationFieldsInput(event.target.value, 'password')
@@ -140,7 +139,7 @@ export const Registration: FC<Props> = () => {
                                 </InputAdornment>
                             )
                         }} />
-                    <Typography variant="h6" sx={{ m: 2, ml: 0 }}>Repeat password</Typography>
+                    <Typography variant="h6" sx={{ m: 1, ml: 0 }}>Repeat password</Typography>
                     <TextField id="passwordCheck" variant="outlined" sx={{ background: 'white' }} type={showPasswordCheck ? "text" : "password"}
                         onChange={(event) => {
                             handleRegistrationFieldsInput(event.target.value, 'passwordCheck')
@@ -174,9 +173,9 @@ export const Registration: FC<Props> = () => {
                     disabled={(!validateEmail(registrationFields.email) || !validatePass(registrationFields.password) || registrationFields.passwordCheck !== registrationFields.password || registrationFields.name.length < 5) ? true : false}
                     onClick={createAccountButton}
                     color='primary' size='large'
-                    sx={{ margin: 2 }}>Create an account</Button>
+                    sx={{ mx: 2 }}>Create an account</Button>
                 <Button variant='contained' onClick={back} color='error' size='large'
-                    sx={{ margin: 2 }}
+                    sx={{ m: 2, mb: 0 }}
                 >I already have an account</Button>
                 <Snackbar
                     open={errorText ? true : false}

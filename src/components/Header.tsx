@@ -5,8 +5,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { FunctionComponent, useEffect, useState } from 'react';
+import { FunctionComponent, useState } from 'react';
 import { AppBar, Button, Dialog, DialogActions, DialogTitle, IconButton, Link } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -15,10 +14,12 @@ import { deleteToken } from '../redux/tokenReducer';
 import { AppRoutes } from '../routerTypes';
 import HomeIcon from '@mui/icons-material/Home';
 import { clearCartSlice } from '../redux/cartReducer';
+import { Time } from './Time';
+import { OrderButton } from './OrderButton';
 
-type SearchBarProps = {}
+type HeaderProps = {}
 
-export const SearchBar: FunctionComponent<SearchBarProps> = () => {
+export const Header: FunctionComponent<HeaderProps> = () => {
 
     const nav = useLocation()
     const currentHeadLine = () => {
@@ -36,8 +37,7 @@ export const SearchBar: FunctionComponent<SearchBarProps> = () => {
     }
     const navigate = useNavigate()
     const dispatcher = useAppDispatch()
-    const cart = useAppSelector(state => state.persistedReducer.cartSlice)
-    const { data, search } = useAppSelector(state => state.persistedReducer.dataSlice)
+    const search = useAppSelector(state => state.persistedReducer.dataSlice.search)
     const tokenState = useAppSelector(state => state.persistedReducer.tokenSlice)
     const [searchTitle, setSearchTitle] = useState<string>('')
 
@@ -53,10 +53,6 @@ export const SearchBar: FunctionComponent<SearchBarProps> = () => {
         dispatcher(clearDataSlice())
         dispatcher(deleteToken())
         setOpen(false)
-    }
-
-    const goOrder = () => {
-        navigate(AppRoutes.ORDER)
     }
 
     const Search = styled('div')(({ theme }) => ({
@@ -94,20 +90,6 @@ export const SearchBar: FunctionComponent<SearchBarProps> = () => {
         },
     }));
 
-    const totalPrice = () => {
-        let sum = 0;
-        cart.forEach(cartEntry => {
-            let dataElement = data.find(el => el.id === cartEntry.id)
-            if (dataElement && cartEntry.quantity) {
-                sum += dataElement.price * cartEntry.quantity
-            }
-        })
-        if (sum === 0) { return 'Empty' }
-        return sum + '$';
-    }
-    const [time, setTime] = useState('')
-    useEffect(() => { setInterval(() => { setTime(new Date().toLocaleTimeString()) }, 1000) })
-
     return (
         (nav.pathname !== '/' && nav.pathname !== '/registration') ?
             <Box sx={{ flexGrow: 1 }}>
@@ -127,8 +109,7 @@ export const SearchBar: FunctionComponent<SearchBarProps> = () => {
                         >
                             {currentHeadLine()}
                         </Typography>
-                        <Typography variant='h6'
-                            component="div" sx={{ mr: 3 }}>{new Date().toLocaleDateString()} {time}</Typography>
+                        <Time />
                         <Typography
                             variant="h6"
                             noWrap
@@ -148,17 +129,7 @@ export const SearchBar: FunctionComponent<SearchBarProps> = () => {
                                 <Button onClick={() => setOpen(false)}>Cancel</Button>
                             </DialogActions>
                         </Dialog>
-                        <IconButton aria-label='cart' onClick={goOrder}>
-                            <ShoppingCartIcon color='action' fontSize='large' sx={{ mr: 2 }} />
-                            <Typography
-                                variant="h6"
-                                noWrap
-                                component="div"
-                                sx={{ display: 'flex', mr: 5, width: '70px' }}
-                            >
-                                {totalPrice()}
-                            </Typography>
-                        </IconButton>
+                        <OrderButton />
                         {
                             (nav.pathname === '/catalogue') ?
                                 <Search>

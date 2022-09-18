@@ -5,7 +5,7 @@ import { AppRoutes } from "../routerTypes";
 import "./pages.css"
 import { LogInFields } from "../types";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import { useAppDispatch } from "../redux/hooks";
 import { addToken } from "../redux/tokenReducer";
 import JWT from 'jsonwebtoken'
 import 'bootstrap/dist/css/bootstrap.min.css'
@@ -71,7 +71,7 @@ export const Login: FC<Props> = () => {
             dispatcher(addToken({ id, name, currentToken, isAuth: true }))
         })
             .catch(function (error: any) {
-                setErrorText(error['message'])
+                setErrorText(error.response.data.error.message)
             });
     }
 
@@ -92,18 +92,17 @@ export const Login: FC<Props> = () => {
             dispatcher(addToken({ id, name, currentToken, isAuth: true }))
         })
             .catch(function (error: any) {
-                setErrorText(error['message'])
+                setErrorText(error.response.data.error.message)
             });
     }
 
-    const onFailure = (err: any) => {
-        setErrorText(err);
-
+    const onFailure = (error: any) => {
+        setErrorText(error.response.data.error.message);
     };
 
     return (
-        <Box sx={{ justifyContent: 'center', display: 'grid', mt: 30 }}>
-            <Card raised sx={{ width: 300, mx: 'auto', mt: 4, py: 1.5, px: 2, display: 'flex', flexDirection: 'column', gap: 2, borderRadius: 'sm', boxShadow: 'md', fontSize: 20, backgroundColor: 'whitesmoke', alignItems: 'center' }}>
+        <Box sx={{ justifyContent: 'center', display: 'grid', mt: 15 }}>
+            <Card raised sx={{ width: 300, mx: 'auto', mt: 4, py: 1.5, px: 2, display: 'flex', flexDirection: 'column', borderRadius: 'sm', fontSize: 20, backgroundColor: 'whitesmoke', alignItems: 'center' }}>
                 Hello! You need to sign in.
             </Card>
             <Card variant='elevation' raised sx={{ height: 'auto', width: 400, backgroundColor: 'whitesmoke', display: 'flex', flexDirection: 'column' }}>

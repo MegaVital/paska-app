@@ -6,9 +6,9 @@ import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { addFilter, addPrice, filterShift } from "../redux/dataReducer";
 import { filter } from "../service.helper";
 
-type FilterFieldProps = {}
+type FilterComponentProps = {}
 
-export const FilterField: FunctionComponent<FilterFieldProps> = () => {
+export const FilterComponent: FunctionComponent<FilterComponentProps> = () => {
 
     const dispatcher = useAppDispatch()
     const data = useAppSelector(state => state.persistedReducer.dataSlice.data)
@@ -30,7 +30,7 @@ export const FilterField: FunctionComponent<FilterFieldProps> = () => {
     }
 
     return (
-        <Box sx={{ width: 400 }} role="presentation">
+        <Box sx={{ minWidth: '300px' }} role="presentation">
             {filter.map((filterItem) => (
                 (filterItem.name === 'Brand' || filterItem.name === 'Size' || filterItem.name === 'Material') ? (
                     <Card raised sx={{

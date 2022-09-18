@@ -19,7 +19,6 @@ type CatalogueItemProps = {
 }
 
 export const CatalogueItem: FunctionComponent<CatalogueItemProps> = ({ title, description, brand, price, material, changeTotalValue, id, image, goProduct, itemTotalPrice }) => {
-
     const quantity = useAppSelector(
         state => {
             const element = state.persistedReducer.cartSlice.find(el => el.id === id)
@@ -28,7 +27,7 @@ export const CatalogueItem: FunctionComponent<CatalogueItemProps> = ({ title, de
         })
 
     return (
-        <Card raised variant="elevation" sx={{ width: '250px', height: 'auto' }}  >
+        <Card raised variant="elevation" sx={{ width: '250px', height: '500px' }}  >
             <CardContent onClick={() => { goProduct(id) }}>
                 <img id='base64image' width={200} height={200} src={image} />
             </CardContent>
