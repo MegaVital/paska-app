@@ -5,7 +5,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
-import { FunctionComponent, useState } from 'react';
+import { FunctionComponent, useEffect, useState } from 'react';
 import { AppBar, Button, Dialog, DialogActions, DialogTitle, IconButton, Link } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -16,6 +16,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import { clearCartSlice } from '../redux/cartReducer';
 import { Time } from './Time';
 import { OrderButton } from './OrderButton';
+import useDebounce from './Hooks';
 
 type HeaderProps = {}
 
@@ -37,14 +38,17 @@ export const Header: FunctionComponent<HeaderProps> = () => {
     }
     const navigate = useNavigate()
     const dispatcher = useAppDispatch()
-    const search = useAppSelector(state => state.persistedReducer.dataSlice.search)
     const tokenState = useAppSelector(state => state.persistedReducer.tokenSlice)
     const [searchTitle, setSearchTitle] = useState<string>('')
+    const debouncedValue = useDebounce<string>(searchTitle, 1000)
 
     const handleSearchInputChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
         setSearchTitle(event.target.value)
     }
-    dispatcher(searchTitleReducer(searchTitle))
+
+    useEffect(() => {
+        dispatcher(searchTitleReducer(searchTitle))
+    }, [debouncedValue])
 
     const [open, setOpen] = useState(false);
 
@@ -140,7 +144,7 @@ export const Header: FunctionComponent<HeaderProps> = () => {
                                         placeholder="Search…"
                                         inputProps={{ 'aria-label': 'search' }}
                                         onChange={handleSearchInputChange}
-                                        value={search}
+                                        value={searchTitle}
                                         autoFocus={true}
                                     />
                                 </Search>

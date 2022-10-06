@@ -1,5 +1,5 @@
 {
-  "name": "piska",
+  "name": "furniture-shop",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -75,13 +75,13 @@
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/MegaVital/paska-app.git"
+    "url": "git+https://github.com/MegaVital/Furniture-Shop-app.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/MegaVital/paska-app/issues"
+    "url": "https://github.com/MegaVital/Furniture-Shop-app/issues"
   },
-  "homepage": "https://github.com/MegaVital/paska-app#readme"
+  "homepage": "https://github.com/MegaVital/Furniture-Shop-app#readme"
 }
