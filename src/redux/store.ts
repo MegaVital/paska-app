@@ -2,6 +2,7 @@ import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import cartSlice from './cartReducer';
 import dataSlice from './dataReducer';
 import tokenSlice from './tokenReducer';
+import pageSlice from './pageReducer';
 import storage from 'redux-persist/lib/storage';
 import { persistReducer, persistStore } from 'redux-persist';
 
@@ -14,7 +15,8 @@ const persistConfig = {
 const rootReducer = combineReducers({
   cartSlice,
   dataSlice,
-  tokenSlice
+  tokenSlice,
+  pageSlice
 })
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)

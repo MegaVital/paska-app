@@ -44,7 +44,6 @@ export const Product: FC<Props> = () => {
                     </CardActions>
                 </CardContent>
                 <CardContent>{dataElement.price}$</CardContent>
-
             </Card>
         </div >
     )

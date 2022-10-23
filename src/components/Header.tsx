@@ -21,11 +21,12 @@ import useDebounce from './Hooks';
 type HeaderProps = {}
 
 export const Header: FunctionComponent<HeaderProps> = () => {
+    const page = useAppSelector(state => state.persistedReducer.pageSlice.page)
 
     const nav = useLocation()
     const currentHeadLine = () => {
         switch (nav.pathname) {
-            case '/catalogue':
+            case `/catalogue/page=${page}`:
                 return 'Catalogue'
             case '/order':
                 return 'Order'
@@ -99,7 +100,7 @@ export const Header: FunctionComponent<HeaderProps> = () => {
             <Box sx={{ flexGrow: 1 }}>
                 <AppBar position="static" color='secondary'>
                     <Toolbar>
-                        {(nav.pathname !== '/catalogue') ?
+                        {(nav.pathname !== `/catalogue/page=${page}`) ?
                             <IconButton aria-label='home'
                                 onClick={goHome}>
                                 <HomeIcon fontSize='large' />
@@ -135,7 +136,7 @@ export const Header: FunctionComponent<HeaderProps> = () => {
                         </Dialog>
                         <OrderButton />
                         {
-                            (nav.pathname === '/catalogue') ?
+                            (nav.pathname === `/catalogue/page=*`) ?
                                 <Search>
                                     <SearchIconWrapper>
                                         <SearchIcon />
