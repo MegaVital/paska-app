@@ -190,8 +190,7 @@ export const Catalogue: FC<Props> = () => {
                                                         {...el}
                                                         goProduct={goProduct}
                                                         itemTotalPrice={itemTotalPrice} />
-                                                </Grid>;
-
+                                                </Grid>
                                             }
                                             )}
                                     </Grid>
