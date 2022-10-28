@@ -128,8 +128,6 @@ export const Registration: FC<Props> = () => {
                             endAdornment: (
                                 <InputAdornment position="end">
                                     <IconButton
-
-                                        onBlur={() => { onBlur('password', true) }}
                                         aria-label="toggle password visibility"
                                         onClick={handleClickShowPassword}
                                         onMouseDown={handleMouseDownPassword}
