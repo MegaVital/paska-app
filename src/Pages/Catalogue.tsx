@@ -63,6 +63,8 @@ export const Catalogue: FC<Props> = () => {
                 })
     })
 
+    const [itemsPerPage, setItemsPerPage] = useState(4)
+
     const {
         firstContentIndex,
         lastContentIndex,
@@ -71,7 +73,7 @@ export const Catalogue: FC<Props> = () => {
         setPage,
         totalPages,
     } = usePagination({
-        contentPerPage: 4,
+        contentPerPage: itemsPerPage,
         count: serverData.length,
     });
 
@@ -195,28 +197,35 @@ export const Catalogue: FC<Props> = () => {
                                             )}
                                     </Grid>
                                     <Grid sx={{ display: 'flex', mt: 3 }}>
-                                        {(pageInReducer !== 1) ? <Button onClick={prevPage}>
-                                            &larr;
-                                        </Button> : <Button disabled>
-                                            &larr;
-                                        </Button>}
-                                        {/* @ts-ignore */}
-                                        {[...Array(totalPages).keys()].map((el) => (
-                                            <Button
-                                                onClick={() => setPage(el + 1)}
-                                                key={el}
-                                                variant={(el + 1 === pageInReducer ? 'contained' : 'text')}
-                                            >
-                                                {el + 1}
-                                            </Button>
-                                        ))}
-                                        {(pageInReducer !== totalPages) ?
-                                            <Button onClick={nextPage}>
-                                                &rarr;
-                                            </Button> :
-                                            <Button disabled>
-                                                &rarr;
+                                        <Box sx={{ mr: 5 }}>
+                                            {(pageInReducer !== 1) ? <Button onClick={prevPage}>
+                                                &larr;
+                                            </Button> : <Button disabled>
+                                                &larr;
                                             </Button>}
+                                            {/* @ts-ignore */}
+                                            {[...Array(totalPages).keys()].map((el) => (
+                                                <Button
+                                                    onClick={() => setPage(el + 1)}
+                                                    key={el}
+                                                    variant={(el + 1 === pageInReducer ? 'contained' : 'text')}
+                                                >
+                                                    {el + 1}
+                                                </Button>
+                                            ))}
+                                            {(pageInReducer !== totalPages) ?
+                                                <Button onClick={nextPage}>
+                                                    &rarr;
+                                                </Button> :
+                                                <Button disabled>
+                                                    &rarr;
+                                                </Button>}
+                                        </Box>
+                                        <Box sx={{ display: 'flex' }}>
+                                            <Typography alignSelf='center' marginRight={3}>Items per page</Typography>
+                                            <Button onClick={() => setItemsPerPage(12)} variant={itemsPerPage === 12 ? 'contained' : 'text'}>12</Button>
+                                            <Button onClick={() => setItemsPerPage(4)} variant={itemsPerPage === 4 ? 'contained' : 'text'}>4</Button>
+                                        </Box>
                                     </Grid>
                                 </Box>
                             )}
