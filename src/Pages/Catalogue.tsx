@@ -225,7 +225,6 @@ export const Catalogue: FC<Props> = () => {
                                         <Box sx={{ display: 'flex' }}>
                                             <Typography alignSelf='center' marginRight={3}>Items per page</Typography>
                                             <Button onClick={
-
                                                 () => {
                                                     dispatcher(currentPage(1))
                                                     setItemsPerPage(12)
