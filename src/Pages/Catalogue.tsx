@@ -12,7 +12,7 @@ import { FilterComponent } from "../components/FilterField";
 import { addToken } from "../redux/tokenReducer";
 import axios from "axios";
 import usePagination from "../components/PaginationHook";
-import { currentPage } from "../redux/pageReducer";
+import { currentPage, itemsPerPage } from "../redux/pageReducer";
 
 type Props = {}
 export const Catalogue: FC<Props> = () => {
@@ -24,7 +24,7 @@ export const Catalogue: FC<Props> = () => {
     const tokenUser = useAppSelector(state => state.persistedReducer.tokenSlice.currentToken)
     const filteredData = useAppSelector(state => state.persistedReducer.dataSlice.filter)
     const tokenState = useAppSelector(state => state.persistedReducer.tokenSlice)
-    const pageInReducer = useAppSelector(state => state.persistedReducer.pageSlice.page)
+    const { page, items } = useAppSelector(state => state.persistedReducer.pageSlice)
     const [sort, setSort] = useState('');
 
     const handleChange = (event: SelectChangeEvent) => {
@@ -64,8 +64,6 @@ export const Catalogue: FC<Props> = () => {
                 })
     })
 
-    const [itemsPerPage, setItemsPerPage] = useState(4)
-
     const {
         firstContentIndex,
         lastContentIndex,
@@ -74,7 +72,7 @@ export const Catalogue: FC<Props> = () => {
         setPage,
         totalPages,
     } = usePagination({
-        contentPerPage: itemsPerPage,
+        contentPerPage: items,
         count: serverData.length,
     });
 
@@ -199,7 +197,7 @@ export const Catalogue: FC<Props> = () => {
                                     </Grid>
                                     <Grid sx={{ display: 'flex', mt: 3 }}>
                                         <Box sx={{ mr: 5 }}>
-                                            {(pageInReducer !== 1) ? <Button onClick={prevPage}>
+                                            {(page !== 1) ? <Button onClick={prevPage}>
                                                 &larr;
                                             </Button> : <Button disabled>
                                                 &larr;
@@ -209,12 +207,12 @@ export const Catalogue: FC<Props> = () => {
                                                 <Button
                                                     onClick={() => setPage(el + 1)}
                                                     key={el}
-                                                    variant={(el + 1 === pageInReducer ? 'contained' : 'text')}
+                                                    variant={(el + 1 === page ? 'contained' : 'text')}
                                                 >
                                                     {el + 1}
                                                 </Button>
                                             ))}
-                                            {(pageInReducer !== totalPages) ?
+                                            {(page !== totalPages) ?
                                                 <Button onClick={nextPage}>
                                                     &rarr;
                                                 </Button> :
@@ -225,14 +223,13 @@ export const Catalogue: FC<Props> = () => {
                                         <Box sx={{ display: 'flex' }}>
                                             <Typography alignSelf='center' marginRight={3}>Items per page</Typography>
                                             <Button onClick={
-
                                                 () => {
+                                                    dispatcher(itemsPerPage(12))
                                                     dispatcher(currentPage(1))
-                                                    setItemsPerPage(12)
                                                     navigate('/')
                                                 }
-                                            } variant={itemsPerPage === 12 ? 'contained' : 'text'}>12</Button>
-                                            <Button onClick={() => setItemsPerPage(4)} variant={itemsPerPage === 4 ? 'contained' : 'text'}>4</Button>
+                                            } variant={items === 12 ? 'contained' : 'text'}>12</Button>
+                                            <Button onClick={() => dispatcher(itemsPerPage(4))} variant={items === 4 ? 'contained' : 'text'}>4</Button>
                                         </Box>
                                     </Grid>
                                 </Box>
