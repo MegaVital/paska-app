@@ -59,7 +59,7 @@ export const CatalogueItem: FunctionComponent<CatalogueItemProps> = ({ title, de
                                     }
                                 }>+</Button>
                                 <span className="quantityAndPrice">
-                                    <span className="quantity">{quantity}pcs</span>
+                                    <span className="quantity">{quantity}</span>
                                     <span className="itemTotalPrice">{itemTotalPrice(id)}$</span>
                                 </span >
                                 <Button variant='contained' size='small' sx={{ p: 0, m: 2 }} onClick={

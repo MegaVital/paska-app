@@ -36,3 +36,12 @@
     justify-content: center;
 
 }
+
+@media (max-width: 1400px) and (min-height: 200px) {
+    .container1 {
+      display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+  }
+}

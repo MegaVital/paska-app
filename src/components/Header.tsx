@@ -98,7 +98,7 @@ export const Header: FunctionComponent<HeaderProps> = () => {
     return (
         (nav.pathname !== '/' && nav.pathname !== '/registration') ?
             <Box sx={{ flexGrow: 1 }}>
-                <AppBar position="static" color='secondary'>
+                <AppBar position="static">
                     <Toolbar>
                         {(nav.pathname !== `/catalogue/page=${page}`) ?
                             <IconButton aria-label='home'

@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Box, Button, CircularProgress, FormControl, Grid, InputLabel, MenuItem, Select, SelectChangeEvent, Typography } from '@mui/material';
 import { CatalogueItem } from "../components/CatalogueItem";
 import "./pages.css"
-import { changeCartContaining, CartActions, materialCheck } from "../service.helper";
+import { changeCartContaining, CartActions, materialCheck, filter } from "../service.helper";
 import { CatalogueEntry } from "../types";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { addItemToCart, deleteItemFromCart, addQuantity, reduceQuantity } from "../redux/cartReducer";
@@ -105,7 +105,7 @@ export const Catalogue: FC<Props> = () => {
     )
 
     const goProduct = (id: string) => {
-        serverData.map((el) => {
+        serverData.map((el: { id: string; }) => {
             if (el.id === id)
                 navigate(`/product/${el.id}`)
         })
@@ -179,7 +179,7 @@ export const Catalogue: FC<Props> = () => {
                         ) :
                             (
                                 <Box>
-                                    <Grid container spacing={6} columns={6} sx={{ margin: 'auto', width: 'auto', padding: '0px', display: 'box' }}>
+                                    <Grid className="container1" container spacing={6} columns={6} sx={{ margin: 'auto', width: 'auto', padding: '0px', display: 'box' }}>
                                         {serverData
                                             .slice(firstContentIndex, lastContentIndex)
                                             .map((el, index) => {
@@ -194,7 +194,7 @@ export const Catalogue: FC<Props> = () => {
                                             }
                                             )}
                                     </Grid>
-                                    <Grid sx={{ display: 'flex', mt: 3 }}>
+                                    <Grid sx={{ display: 'flex', mt: 3, mb: 6 }}>
                                         <Box sx={{ mr: 5 }}>
                                             {(page !== 1) ? <Button onClick={prevPage}>
                                                 &larr;

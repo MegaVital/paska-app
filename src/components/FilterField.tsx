@@ -1,10 +1,12 @@
 import React, { FunctionComponent, useState } from "react";
 import { DataFilters } from "../types";
 import './components.css'
-import { Button, Card, Grid, Box, Checkbox, FormControlLabel, List, ListItem, ListItemText, Slider } from "@mui/material";
+import { Button, Card, Grid, Box, Checkbox, FormControlLabel, List, ListItem, ListItemText, Slider, Accordion, AccordionSummary, AccordionDetails } from "@mui/material";
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { addFilter, addPrice, filterShift } from "../redux/dataReducer";
 import { filter } from "../service.helper";
+
 
 type FilterComponentProps = {}
 
@@ -30,55 +32,76 @@ export const FilterComponent: FunctionComponent<FilterComponentProps> = () => {
     }
 
     return (
-        <Box sx={{ minWidth: '300px' }} role="presentation">
+        <Box sx={{ minWidth: '300px' }} role="presentation" >
             {filter.map((filterItem) => (
                 (filterItem.name === 'Brand' || filterItem.name === 'Size' || filterItem.name === 'Material') ? (
                     <Card raised sx={{
-                        display: 'grid', justifyContent: 'left', margin: 3, padding: 3
+                        display: 'inherit', justifyContent: 'left', margin: 3, padding: 3
                     }}
                         key={filterItem.name}>
-                        <List>
-                            <ListItem key={filterItem.name} disablePadding>
-                                <ListItemText primary={filterItem.name} />
-                            </ListItem>
-                        </List>
-                        {
-                            filterItem.contain.map((checkboxName) =>
-                                <FormControlLabel
-                                    key={checkboxName}
-                                    label={checkboxName}
-                                    control={<Checkbox
-                                        checked={filteredData[filterItem.name as keyof DataFilters].includes(checkboxName)}
-                                        onChange={() => handleChangeCheckbox(checkboxName, filterItem.name)} />}
-                                />
-                            )
-                        }
+                        <Accordion sx={{ display: "contents" }} >
+                            <AccordionSummary
+                                expandIcon={<ExpandMoreIcon />}
+                                aria-controls="panel2a-content"
+                                id="panel2a-header">
+                                <List>
+                                    <ListItem disablePadding>
+                                        <ListItemText primary={filterItem.name} />
+                                    </ListItem>
+                                </List>
+                            </AccordionSummary>
+                            {
+                                filterItem.contain.map((checkboxName) =>
+                                    < AccordionDetails key={checkboxName}>
+                                        <FormControlLabel
+                                            label={checkboxName}
+                                            control={<Checkbox
+                                                checked={filteredData[filterItem.name as keyof DataFilters].includes(checkboxName)}
+                                                onChange={() => handleChangeCheckbox(checkboxName, filterItem.name)} />}
+                                        />
+                                    </AccordionDetails>
+                                )
+                            }
+                        </Accordion>
                     </Card>) : null
             ))}
-            <Card raised sx={{ display: 'grid', margin: 3, padding: 3 }}>
-                <List sx={{ mb: 3 }}>
-                    <ListItem disablePadding>
-                        <ListItemText>Price</ListItemText>
-                    </ListItem>
-                </List>
-                <Slider
-                    disableSwap
-                    getAriaLabel={() => 'Price'}
-                    valueLabelDisplay="on"
-                    min={min}
-                    max={max}
-                    onChange={handleChangeSlider}
-                    value={slider}
-                />
-                <Button variant="contained" color='primary' size='medium'
-                    onClick={applyPrice}
-                    sx={{ width: '30px', justifySelf: 'right' }}>Apply</Button></Card>
-            <Grid sx={{ width: 200, display: 'grid' }}><Button variant="contained" color='error' size='medium'
-                onClick={() => {
-                    dispatcher(filterShift())
-                    setSlider([min, max])
-                }}
-                sx={{ width: 'auto', justifySelf: 'center', mt: '10px' }}>Clear filter</Button>
+            <Card raised sx={{ display: 'inherit', margin: 3, padding: 3 }}>
+                <Accordion sx={{ display: "contents" }}>
+                    <AccordionSummary
+                        expandIcon={<ExpandMoreIcon />}
+                        aria-controls="panel2a-content"
+                        id="panel2a-header">
+                        <List>
+                            <ListItem disablePadding>
+                                <ListItemText>
+                                    Price
+                                </ListItemText>
+                            </ListItem>
+                        </List>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                        <Slider
+                            disableSwap
+                            getAriaLabel={() => 'Price'}
+                            valueLabelDisplay="on"
+                            min={min}
+                            max={max}
+                            onChange={handleChangeSlider}
+                            value={slider}
+                        />
+                        <Button variant="contained" color='primary' size='medium'
+                            onClick={applyPrice}
+                            sx={{ width: '30px', justifySelf: 'right' }}>Apply</Button>
+                    </AccordionDetails>
+                </Accordion>
+            </Card>
+            <Grid sx={{ width: 200, display: 'grid' }}>
+                <Button variant="contained" size='medium'
+                    onClick={() => {
+                        dispatcher(filterShift())
+                        setSlider([min, max])
+                    }}
+                    sx={{ width: 'auto', justifySelf: 'center', mt: '10px' }}>Clear filter</Button>
             </Grid>
         </Box>)
 }

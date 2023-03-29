@@ -14,7 +14,6 @@ import { gapi } from 'gapi-script';
 const axios = require('axios').default
 const clientId = '20193487866-88r5prmk0l03f52dsel598o3ts2udeti.apps.googleusercontent.com'
 
-
 type Props = {}
 
 export const Login: FC<Props> = () => {
