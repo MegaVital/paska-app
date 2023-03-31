@@ -17,59 +17,9 @@
     -webkit-box-orient: vertical;
     display: -webkit-inline-box;
 }
-.descriptionText{
-    color: grey;
-    font-size:11px;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    -webkit-line-clamp: 1;
-    -webkit-box-orient: vertical;
-    display: -webkit-inline-box;
-}
-.materialText{
-    color: grey;
-    font-size:14px;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    -webkit-line-clamp: 1;
-    -webkit-box-orient: vertical;
-    display: -webkit-inline-box;
-}
-.priceText{
-    color: green;
-    font-size: 18px;
-    font-weight: bold;
-}
-
-.buttonContainer {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-}
 
 .autoWidth {
     width: auto;
     text-align: center;
 }
 
-.quantity {
-    color: black;
-    font-size: 12px;
-    align-self: center;
-}
-
-.itemTotalPrice {
-    color: black;
-    font-size: 12px;
-}
-.quantityAndPrice {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-.orderQaP {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}

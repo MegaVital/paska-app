@@ -1,6 +1,6 @@
 import { FunctionComponent, useState } from "react";
 import './components.css'
-import { Button, Tooltip, ListItem, List, IconButton, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from "@mui/material";
+import { Button, Tooltip, ListItem, List, IconButton, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Card, Typography, Box, CardContent } from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
 import React from "react";
 import { CatalogueEntry } from "../types";
@@ -15,9 +15,10 @@ type OrderItemProps = {
     image?: CatalogueEntry['image']
     changeTotalValue: (id: string, isDeleting: boolean) => void
     itemTotalPrice: (id: string) => void
+    goProduct: (id: string) => void
 }
 
-export const OrderItem: FunctionComponent<OrderItemProps> = ({ title, changeTotalValue, id, image, itemTotalPrice }) => {
+export const OrderItem: FunctionComponent<OrderItemProps> = ({ title, changeTotalValue, id, image, itemTotalPrice, goProduct }) => {
 
     const [open, setOpen] = useState(false);
 
@@ -32,37 +33,38 @@ export const OrderItem: FunctionComponent<OrderItemProps> = ({ title, changeTota
     const dispatcher = useAppDispatch()
 
     return (
-        <List sx={{ bgcolor: "white", width: 700, margin: 'auto', padding: 0, flexDirection: 'row', display: 'flex' }}>
-            <ListItem sx={{ width: 100, justifyContent: 'center' }}>
-                <img id='base64image' width={200} height={200}
-                    src={image} />
+        <Card sx={{ width: 700, margin: 'auto', padding: 0, flexDirection: 'row', display: 'flex' }}>
+            <ListItem sx={{ width: 'auto', justifyContent: 'center' }}>
+                <Button onClick={() => { goProduct(id) }}>
+                    <img id='base64image' width={200} height={200} src={image} />
+                </Button>
             </ListItem>
             <ListItem sx={{ width: 200, justifyContent: 'center' }}>
                 < Tooltip title={title} placement="top">
-                    <div className="titleText">
+                    <Typography sx={{ fontWeight: 'bold' }}>
                         {title}
-                    </div>
+                    </Typography>
                 </Tooltip >
             </ListItem>
             <ListItem sx={{ width: 200, justifyContent: 'center' }}>
                 {
                     (quantity > 0) ? (
-                        <div className="buttonContainer">
+                        <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
                             <Button variant='text' onClick={
                                 () => {
                                     changeTotalValue(id, false)
                                 }
                             }>+</Button>
-                            <span className="orderQaP">
-                                <span className="quantity">{quantity} pcs</span>
-                                <span className="itemTotalPrice">{itemTotalPrice(id)}$</span>
-                            </span >
+                            <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: "center", alignItems: 'center' }}>
+                                <span>{quantity}</span>
+                                <span>{itemTotalPrice(id)}$</span>
+                            </Box >
                             <Button variant='text' onClick={
                                 () => {
                                     changeTotalValue(id, true)
                                 }
                             }>-</Button>
-                        </div>
+                        </Box>
                     )
                         :
                         <Button variant='contained'
@@ -98,7 +100,7 @@ export const OrderItem: FunctionComponent<OrderItemProps> = ({ title, changeTota
 
                 </DialogActions>
             </Dialog>
-        </List>
+        </Card>
 
     )
 }

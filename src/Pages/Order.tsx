@@ -7,11 +7,12 @@ import React from "react";
 import { changeCartContaining, CartActions } from "../service.helper";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { addItemToCart, deleteItemFromCart, addQuantity, reduceQuantity } from "../redux/cartReducer";
+import { useNavigate } from "react-router-dom";
 
 type OrderItemProps = {}
 
 export const Order: FC<OrderItemProps> = () => {
-
+    const navigate = useNavigate()
     const dispatcher = useAppDispatch()
     const serverData = useAppSelector(state => state.persistedReducer.dataSlice.data)
     const cart = useAppSelector(state => state.persistedReducer.cartSlice)
@@ -72,9 +73,16 @@ export const Order: FC<OrderItemProps> = () => {
         return sum;
     }
 
+    const goProduct = (id: string) => {
+        serverData.map((el: { id: string; }) => {
+            if (el.id === id)
+                navigate(`/product/${el.id}`)
+        })
+    }
+
     return (
         <div>
-            <Typography sx={{ mt: 8, mb: 4, textAlign: 'center', color: 'black' }} variant="h3" component="div">
+            <Typography sx={{ mt: 8, mb: 4, textAlign: 'center' }} variant="h3" component="div">
                 Your cart:
             </Typography>
             <List sx={{ width: 700, margin: 'auto' }}>
@@ -86,7 +94,8 @@ export const Order: FC<OrderItemProps> = () => {
                                     key={serverData[index].id}
                                     changeTotalValue={changeTotalValue}
                                     {...el}
-                                    itemTotalPrice={itemTotalPrice} />
+                                    itemTotalPrice={itemTotalPrice}
+                                    goProduct={goProduct} />
                             </ListItem>
                             <Divider />
                         </React.Fragment>;
@@ -95,7 +104,7 @@ export const Order: FC<OrderItemProps> = () => {
                 }
                 )}
             </List>
-            <div className="orderPrice">Total: {totalPrice()}$</div>
+            <Typography sx={{ fontSize: 24, textAlign: 'center', fontWeight: 'bold', my: 4 }}>Total: {totalPrice()} $</Typography>
         </div>
     )
 }

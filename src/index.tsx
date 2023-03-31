@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext, useMemo, useState } from 'react';
 import { BrowserRouter } from "react-router-dom";
 import './index.css';
 import reportWebVitals from './reportWebVitals';
@@ -8,8 +8,6 @@ import { store } from './redux/store'
 import { Provider } from 'react-redux'
 import { persistor } from './redux/store'
 import { PersistGate } from 'redux-persist/integration/react';
-import { Header } from './components/Header';
-
 const container = document.getElementById('root');
 const root = createRoot(container!); // createRoot(container!) if you use TypeScript
 
@@ -18,7 +16,6 @@ root.render(
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <BrowserRouter>
-          <Header />
           <Router />
         </BrowserRouter>
       </PersistGate>

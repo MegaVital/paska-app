@@ -16,15 +16,16 @@ export const Product: FC<Props> = () => {
         <div>
             <Card sx={{ maxWidth: 700, mt: 10, ml: 10 }}>
                 <CardContent>
-                    <Typography variant="h4">
+                    <Typography variant="h4" sx={{ fontWeight: 'bold' }}>
                         {dataElement.title}
+
                     </Typography>
                 </CardContent>
                 <CardContent sx={{ display: '-webkit-inline-box' }}>
                     <img id='base64image' width={200} height={200} src={dataElement.image} />
                     <CardActions sx={{ maxWidth: '400px', display: 'block', padding: 0, pl: '20px' }}>
-                        <Typography>Description</Typography>
-                        <Typography sx={{ textAlign: 'justify' }}>
+                        <Typography sx={{ fontWeight: 'bold', mb: 4 }}>Description:</Typography>
+                        <Typography sx={{ textAlign: 'justify', mb: 4 }}>
                             {dataElement.description}
                         </Typography>
                         <Typography sx={{ textAlign: 'justify' }}>

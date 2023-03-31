@@ -101,19 +101,19 @@ export const Login: FC<Props> = () => {
 
     return (
         <Box sx={{ justifyContent: 'center', display: 'grid', mt: 15 }}>
-            <Card raised sx={{ width: 300, mx: 'auto', mt: 4, py: 1.5, px: 2, display: 'flex', flexDirection: 'column', borderRadius: 'sm', fontSize: 20, backgroundColor: 'whitesmoke', alignItems: 'center' }}>
+            <Card raised sx={{ width: 300, mx: 'auto', mt: 4, py: 1.5, px: 2, display: 'flex', flexDirection: 'column', borderRadius: 'sm', fontSize: 20, alignItems: 'center' }}>
                 Hello! You need to sign in.
             </Card>
-            <Card variant='elevation' raised sx={{ height: 'auto', width: 400, backgroundColor: 'whitesmoke', display: 'flex', flexDirection: 'column' }}>
+            <Card variant='elevation' raised sx={{ height: 'auto', width: 400, display: 'flex', flexDirection: 'column' }}>
                 <Box sx={{ margin: 5, display: 'grid' }}>
                     <Typography variant="h6" sx={{ m: 2, ml: 0 }}>E-mail</Typography>
-                    <TextField id="email" variant="outlined" sx={{ background: 'white' }} label='Type your e-mail'
+                    <TextField id="email" variant="outlined" label='Type your e-mail'
                         onChange={(event) => handleLogInFieldsInput(event.target.value, 'nameOrEmail')}
                         value={logInFields.nameOrEmail}
                         error={(errorText) ? true : false}
                     />
                     <Typography variant="h6" sx={{ m: 2, ml: 0 }}>Password</Typography>
-                    <TextField id="password" type={showPassword ? "text" : "password"} sx={{ background: 'white' }} label='Type your password'
+                    <TextField id="password" type={showPassword ? "text" : "password"} label='Type your password'
                         onChange={(event) => handleLogInFieldsInput(event.target.value, 'password')}
                         value={logInFields.password}
                         error={(errorText) ? true : false}

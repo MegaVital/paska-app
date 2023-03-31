@@ -1,9 +1,10 @@
 import React, { FunctionComponent } from "react";
 import { CatalogueEntry } from "../types";
 import './components.css'
-import { Button, CardContent, Card, CardActions, Tooltip, IconButton } from "@mui/material";
+import { Button, CardContent, Card, CardActions, Tooltip, IconButton, Box, Typography, createTheme, PaletteMode } from "@mui/material";
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import { useAppSelector } from "../redux/hooks";
+import { getDesignTokens } from "../service.helper";
 
 type CatalogueItemProps = {
     id: CatalogueEntry['id'],
@@ -19,55 +20,61 @@ type CatalogueItemProps = {
 }
 
 export const CatalogueItem: FunctionComponent<CatalogueItemProps> = ({ title, description, brand, price, material, changeTotalValue, id, image, goProduct, itemTotalPrice }) => {
+    const reducerTheme = useAppSelector<PaletteMode>(state => state.persistedReducer.themeSlice.mode)
     const quantity = useAppSelector(
         state => {
             const element = state.persistedReducer.cartSlice.find(el => el.id === id)
             if (element) return element.quantity
             else return 0
         })
+    let theme = createTheme((getDesignTokens(reducerTheme)))
 
     return (
         <Card raised variant="elevation" sx={{ width: '250px', height: '500px' }}  >
-            <CardContent onClick={() => { goProduct(id) }}>
-                <img id='base64image' width={200} height={200} src={image} />
-            </CardContent>
-            <CardContent onClick={() => { goProduct(id) }}>
-                <div className="titleText">
+            <CardActions onClick={() => { goProduct(id) }} sx={{ justifyContent: 'center' }}>
+                <Button>
+                    <img id='base64image' width={200} height={200} src={image} />
+                </Button>
+            </CardActions>
+            <CardContent >
+                <Typography style={{ fontWeight: 'bold', whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}>
                     {title}
-                </div>
-                <div className='brandName'>by {brand}</div>
+                </Typography>
+                <Typography style={{ fontWeight: 'bold', fontSize: 13, whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden', marginBottom: 4 }}>
+                    by {brand}
+                </Typography>
                 <Tooltip title={description}>
-                    <div className="descriptionText">
+                    <Typography sx={{ color: theme.palette.text.secondary }} style={{ fontSize: 11, overflow: 'hidden', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', display: '-webkit-inline-box' }}>
                         {description}
-                    </div>
+                    </Typography>
                 </Tooltip>
-                <div className="materialText">
+                <Typography sx={{ color: theme.palette.text.secondary }} style={{ fontSize: 14, overflow: 'hidden', WebkitLineClamp: 1, WebkitBoxOrient: 'vertical', display: '-webkit-inline-box' }}>
                     Material: {material.join(', ')}
-                </div>
-                <div className="priceText">
+                </Typography>
+                <Typography color='green' sx={{ fontWeight: 'bold' }}>
                     {price}$
-                </div>
-            </CardContent>
+                </Typography>
+            </CardContent >
             <CardContent>
                 <CardActions sx={{ justifyContent: 'center' }} >
                     {
                         (quantity > 0) ? (
-                            <div className="buttonContainer">
+                            <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
                                 <Button variant='contained' size='small' sx={{ p: 0, m: 2 }} onClick={
                                     () => {
                                         changeTotalValue(id, false)
                                     }
                                 }>+</Button>
-                                <span className="quantityAndPrice">
-                                    <span className="quantity">{quantity}</span>
-                                    <span className="itemTotalPrice">{itemTotalPrice(id)}$</span>
-                                </span >
+                                <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: "center", alignItems: 'center', fontSize: 12 }}>
+                                    <span>{quantity}</span>
+                                    <span>{itemTotalPrice(id)}$</span>
+                                </Box >
                                 <Button variant='contained' size='small' sx={{ p: 0, m: 2 }} onClick={
                                     () => {
                                         changeTotalValue(id, true)
                                     }
                                 }>-</Button>
-                            </div>
+                            </Box>
                         )
                             :
                             <Tooltip title="Add to cart" placement="top">

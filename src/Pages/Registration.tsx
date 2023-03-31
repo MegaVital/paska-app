@@ -90,11 +90,11 @@ export const Registration: FC<Props> = () => {
     return (
         <Box sx={{ justifyContent: 'center', display: 'grid', mt: 8 }}>
             <Typography variant="h4" sx={{ textAlign: 'center' }}>Welcome!</Typography>
-            <Card variant='elevation' raised sx={{ height: 'auto', width: 400, backgroundColor: 'whitesmoke', display: 'flex', flexDirection: 'column' }}>
+            <Card variant='elevation' raised sx={{ height: 'auto', width: 400, display: 'flex', flexDirection: 'column' }}>
                 <Box sx={{ margin: 6, mb: 1, display: 'grid' }}>
                     <Typography variant="h6" sx={{ m: 1, ml: 0, mb: 0 }}>Name</Typography>
                     <Typography sx={{ m: 2, ml: 0, color: "grey", mt: 0, fontStyle: 'italic' }}>(at least 5 symbols)</Typography>
-                    <TextField id="name" variant="outlined" sx={{ background: 'white' }} label='Name'
+                    <TextField id="name" variant="outlined" label='Name'
                         onChange={(event) => {
                             handleRegistrationFieldsInput(event.target.value, 'name')
                         }}
@@ -105,7 +105,7 @@ export const Registration: FC<Props> = () => {
                         : <Box sx={{ height: '48px' }} />}
                     <Typography variant="h6" sx={{ m: 1, ml: 0 }}>E-mail</Typography>
                     <TextField id="email" variant="outlined"
-                        label='Type your E-mail' sx={{ background: 'white' }}
+                        label='Type your E-mail'
                         onChange={(event) => {
                             handleRegistrationFieldsInput(event.target.value, 'email')
                         }}
@@ -116,7 +116,7 @@ export const Registration: FC<Props> = () => {
                         : <Box sx={{ height: '48px' }} />}
                     <Typography variant="h6" sx={{ m: 1, ml: 0, mb: 0 }}>Password</Typography>
                     <Typography sx={{ m: 1, ml: 0, color: "grey", mt: 0, fontStyle: 'italic' }}>(at least 8 symbols)</Typography>
-                    <TextField id="password" variant="outlined" sx={{ background: 'white' }} type={showPassword ? "text" : "password"}
+                    <TextField id="password" variant="outlined" type={showPassword ? "text" : "password"}
                         onChange={(event) => {
                             handleRegistrationFieldsInput(event.target.value, 'password')
                         }}
@@ -138,7 +138,7 @@ export const Registration: FC<Props> = () => {
                             )
                         }} />
                     <Typography variant="h6" sx={{ m: 1, ml: 0 }}>Repeat password</Typography>
-                    <TextField id="passwordCheck" variant="outlined" sx={{ background: 'white' }} type={showPasswordCheck ? "text" : "password"}
+                    <TextField id="passwordCheck" variant="outlined" type={showPasswordCheck ? "text" : "password"}
                         onChange={(event) => {
                             handleRegistrationFieldsInput(event.target.value, 'passwordCheck')
                         }}

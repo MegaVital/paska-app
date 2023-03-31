@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { styled, alpha } from '@mui/material/styles';
+import { styled, alpha, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
@@ -13,16 +13,20 @@ import { clearDataSlice, searchTitleReducer } from '../redux/dataReducer';
 import { deleteToken } from '../redux/tokenReducer';
 import { AppRoutes } from '../routerTypes';
 import HomeIcon from '@mui/icons-material/Home';
+import DarkModeSharpIcon from '@mui/icons-material/DarkModeSharp';
 import { clearCartSlice } from '../redux/cartReducer';
 import { Time } from './Time';
 import { OrderButton } from './OrderButton';
 import useDebounce from './Hooks';
+import { ColorModeContext } from '../service.helper';
+import LightModeIcon from '@mui/icons-material/LightMode';
 
 type HeaderProps = {}
 
 export const Header: FunctionComponent<HeaderProps> = () => {
     const page = useAppSelector(state => state.persistedReducer.pageSlice.page)
-
+    const theme = useTheme();
+    const colorMode = React.useContext(ColorModeContext);
     const nav = useLocation()
     const currentHeadLine = () => {
         switch (nav.pathname) {
@@ -42,7 +46,6 @@ export const Header: FunctionComponent<HeaderProps> = () => {
     const tokenState = useAppSelector(state => state.persistedReducer.tokenSlice)
     const [searchTitle, setSearchTitle] = useState<string>('')
     const debouncedValue = useDebounce<string>(searchTitle, 1000)
-
     const handleSearchInputChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
         setSearchTitle(event.target.value)
     }
@@ -95,11 +98,17 @@ export const Header: FunctionComponent<HeaderProps> = () => {
         },
     }));
 
+
     return (
         (nav.pathname !== '/' && nav.pathname !== '/registration') ?
             <Box sx={{ flexGrow: 1 }}>
                 <AppBar position="static">
                     <Toolbar>
+                        <IconButton onClick={colorMode.toggleColorMode}>
+                            {(theme.palette.mode === 'light')
+                                ? <DarkModeSharpIcon color='action' />
+                                : <LightModeIcon />}
+                        </IconButton>
                         {(nav.pathname !== `/catalogue/page=${page}`) ?
                             <IconButton aria-label='home'
                                 onClick={goHome}>
@@ -115,28 +124,9 @@ export const Header: FunctionComponent<HeaderProps> = () => {
                             {currentHeadLine()}
                         </Typography>
                         <Time />
-                        <Typography
-                            variant="h6"
-                            noWrap
-                            component="div"
-                            sx={{ display: 'flex' }}
-                        >
-                            {tokenState.name}
-                        </Typography>
-                        <Link component="button" onClick={() => { setOpen(true) }} sx={{ color: 'white', mr: 5, ml: 2 }} >(Log out)</Link>
-                        <Dialog
-                            open={open}
-                            onClose={() => { setOpen(false) }}
-                            aria-describedby="alert-dialog-log-out">
-                            <DialogTitle> Are you sure you want to leave?</DialogTitle>
-                            <DialogActions>
-                                <Button autoFocus onClick={logOut}>Yes</Button>
-                                <Button onClick={() => setOpen(false)}>Cancel</Button>
-                            </DialogActions>
-                        </Dialog>
                         <OrderButton />
                         {
-                            (nav.pathname === `/catalogue/page=*`) ?
+                            (nav.pathname === `/catalogue/page=${page}`) ?
                                 <Search>
                                     <SearchIconWrapper>
                                         <SearchIcon />
@@ -152,6 +142,25 @@ export const Header: FunctionComponent<HeaderProps> = () => {
                                 :
                                 null
                         }
+                        <Typography
+                            variant="h6"
+                            noWrap
+                            component="div"
+                            sx={{ display: 'flex', ml: 4 }}
+                        >
+                            {tokenState.name}
+                        </Typography>
+                        <Link component="button" onClick={() => { setOpen(true) }} sx={{ color: 'white', mr: 2, ml: 2 }} >(Log out)</Link>
+                        <Dialog
+                            open={open}
+                            onClose={() => { setOpen(false) }}
+                            aria-describedby="alert-dialog-log-out">
+                            <DialogTitle>Are you sure you want to leave?</DialogTitle>
+                            <DialogActions>
+                                <Button autoFocus onClick={logOut}>Yes</Button>
+                                <Button onClick={() => setOpen(false)}>Cancel</Button>
+                            </DialogActions>
+                        </Dialog>
                     </Toolbar>
                 </AppBar>
             </Box> : null

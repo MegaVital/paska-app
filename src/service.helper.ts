@@ -1,3 +1,33 @@
+import { PaletteMode } from "@mui/material";
+import { createContext } from "react";
+import { grey } from '@mui/material/colors';
+export const ColorModeContext = createContext({
+    toggleColorMode: () => {
+        // This is intentional
+    },
+});
+
+export const getDesignTokens = (mode: PaletteMode) => ({
+    palette: {
+        mode,
+        ...(mode === 'light'
+            ? {
+                // palette values for light mode
+                text: {
+                    secondary: grey[600],
+                },
+            }
+            : {
+                // palette values for dark mode
+                text: {
+                    secondary: '#fff',
+                },
+            }),
+
+    },
+});
+
+
 export interface CartActions {
     cartChanges: 'create' | 'addQuantity' | 'remove' | 'reduceQuantity';
 }
