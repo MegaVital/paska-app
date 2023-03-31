@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from "react";
 import { CatalogueEntry } from "../types";
 import './components.css'
-import { Button, CardContent, Card, CardActions, Tooltip, IconButton } from "@mui/material";
+import { Button, CardContent, Card, CardActions, Tooltip, IconButton, Box, Typography } from "@mui/material";
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import { useAppSelector } from "../redux/hooks";
 
@@ -28,46 +28,50 @@ export const CatalogueItem: FunctionComponent<CatalogueItemProps> = ({ title, de
 
     return (
         <Card raised variant="elevation" sx={{ width: '250px', height: '500px' }}  >
-            <CardContent onClick={() => { goProduct(id) }}>
-                <img id='base64image' width={200} height={200} src={image} />
-            </CardContent>
-            <CardContent onClick={() => { goProduct(id) }}>
-                <div className="titleText">
+            <CardActions onClick={() => { goProduct(id) }} sx={{ justifyContent: 'center' }}>
+                <Button>
+                    <img id='base64image' width={200} height={200} src={image} />
+                </Button>
+            </CardActions>
+            <CardContent >
+                <Typography style={{ fontWeight: 'bold', whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}>
                     {title}
-                </div>
-                <div className='brandName'>by {brand}</div>
+                </Typography>
+                <Typography style={{ fontWeight: 'bold', fontSize: 13, whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden', marginBottom: 4 }}>
+                    by {brand}
+                </Typography>
                 <Tooltip title={description}>
-                    <div className="descriptionText">
+                    <span className="descriptionText">
                         {description}
-                    </div>
+                    </span>
                 </Tooltip>
-                <div className="materialText">
+                <span className="materialText">
                     Material: {material.join(', ')}
-                </div>
-                <div className="priceText">
+                </span>
+                <Typography color='green' sx={{ fontWeight: 'bold' }}>
                     {price}$
-                </div>
-            </CardContent>
+                </Typography>
+            </CardContent >
             <CardContent>
                 <CardActions sx={{ justifyContent: 'center' }} >
                     {
                         (quantity > 0) ? (
-                            <div className="buttonContainer">
+                            <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
                                 <Button variant='contained' size='small' sx={{ p: 0, m: 2 }} onClick={
                                     () => {
                                         changeTotalValue(id, false)
                                     }
                                 }>+</Button>
-                                <span className="quantityAndPrice">
-                                    <span className="quantity">{quantity}</span>
-                                    <span className="itemTotalPrice">{itemTotalPrice(id)}$</span>
-                                </span >
+                                <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: "center", alignItems: 'center', fontSize: 12 }}>
+                                    <span>{quantity}</span>
+                                    <span>{itemTotalPrice(id)}$</span>
+                                </Box >
                                 <Button variant='contained' size='small' sx={{ p: 0, m: 2 }} onClick={
                                     () => {
                                         changeTotalValue(id, true)
                                     }
                                 }>-</Button>
-                            </div>
+                            </Box>
                         )
                             :
                             <Tooltip title="Add to cart" placement="top">

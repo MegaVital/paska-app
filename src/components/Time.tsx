@@ -9,7 +9,7 @@ export const Time: FunctionComponent<Time> = () => {
     useEffect(() => { setInterval(() => { setTime(new Date().toLocaleTimeString()) }, 1000) })
 
     return (
-        <Typography variant='h6'
+        <Typography
             component="div" sx={{ mr: 3 }}>{new Date().toLocaleDateString()} {time}</Typography>
     )
 }
