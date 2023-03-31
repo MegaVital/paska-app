@@ -1,6 +1,6 @@
 import { FunctionComponent, useState } from "react";
 import './components.css'
-import { Button, Tooltip, ListItem, List, IconButton, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Card, Typography, Box, CardContent } from "@mui/material";
+import { Button, Tooltip, ListItem, List, IconButton, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Card, Typography, Box } from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
 import React from "react";
 import { CatalogueEntry } from "../types";
@@ -21,69 +21,68 @@ type OrderItemProps = {
 export const OrderItem: FunctionComponent<OrderItemProps> = ({ title, changeTotalValue, id, image, itemTotalPrice, goProduct }) => {
 
     const [open, setOpen] = useState(false);
-
+    const dispatcher = useAppDispatch()
     const quantity = useAppSelector(
         state => {
             const element = state.persistedReducer.cartSlice.find(el => el.id === id)
             if (element) return element.quantity
             else return 0
-
         })
 
-    const dispatcher = useAppDispatch()
-
     return (
-        <Card sx={{ width: 700, margin: 'auto', padding: 0, flexDirection: 'row', display: 'flex' }}>
-            <ListItem sx={{ width: 'auto', justifyContent: 'center' }}>
-                <Button onClick={() => { goProduct(id) }}>
-                    <img id='base64image' width={200} height={200} src={image} />
-                </Button>
-            </ListItem>
-            <ListItem sx={{ width: 200, justifyContent: 'center' }}>
-                < Tooltip title={title} placement="top">
-                    <Typography sx={{ fontWeight: 'bold' }}>
-                        {title}
-                    </Typography>
-                </Tooltip >
-            </ListItem>
-            <ListItem sx={{ width: 200, justifyContent: 'center' }}>
-                {
-                    (quantity > 0) ? (
-                        <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
-                            <Button variant='text' onClick={
-                                () => {
-                                    changeTotalValue(id, false)
-                                }
-                            }>+</Button>
-                            <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: "center", alignItems: 'center' }}>
-                                <span>{quantity}</span>
-                                <span>{itemTotalPrice(id)}$</span>
-                            </Box >
-                            <Button variant='text' onClick={
-                                () => {
-                                    changeTotalValue(id, true)
-                                }
-                            }>-</Button>
-                        </Box>
-                    )
-                        :
-                        <Button variant='contained'
-                            onClick={
-                                () => {
+        <Card>
+            <List sx={{ width: 700, margin: 'auto', padding: 0, flexDirection: 'row', display: 'flex' }}>
+                <ListItem sx={{ width: 'auto', justifyContent: 'center' }}>
+                    <Button onClick={() => { goProduct(id) }}>
+                        <img id='base64image' width={200} height={200} src={image} />
+                    </Button>
+                </ListItem>
+                <ListItem sx={{ width: 200, justifyContent: 'center' }}>
+                    < Tooltip title={title} placement="top">
+                        <Typography sx={{ fontWeight: 'bold' }}>
+                            {title}
+                        </Typography>
+                    </Tooltip >
+                </ListItem>
+                <ListItem sx={{ width: 200, justifyContent: 'center' }}>
+                    {
+                        (quantity > 0) ? (
+                            <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+                                <Button variant='text' onClick={
+                                    () => {
+                                        changeTotalValue(id, false)
+                                    }
+                                }>+</Button>
+                                <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: "center", alignItems: 'center' }}>
+                                    <span>{quantity}</span>
+                                    <span>{itemTotalPrice(id)}$</span>
+                                </Box >
+                                <Button variant='text' onClick={
+                                    () => {
+                                        changeTotalValue(id, true)
+                                    }
+                                }>-</Button>
+                            </Box>
+                        )
+                            :
+                            <Button variant='contained'
+                                onClick={
+                                    () => {
 
-                                    changeTotalValue(id, false)
-                                }
-                            } >Add to cart
-                        </Button>
-                }
-            </ListItem>
-            <ListItem sx={{ width: 200, justifyContent: 'center' }}>
-                <Tooltip title='Delete' placement="top">
-                    <IconButton onClick={() => setOpen(true)}>
-                        <DeleteIcon />
-                    </IconButton>
-                </Tooltip>
-            </ListItem>
+                                        changeTotalValue(id, false)
+                                    }
+                                } >Add to cart
+                            </Button>
+                    }
+                </ListItem>
+                <ListItem sx={{ width: 200, justifyContent: 'center' }}>
+                    <Tooltip title='Delete' placement="top">
+                        <IconButton onClick={() => setOpen(true)}>
+                            <DeleteIcon />
+                        </IconButton>
+                    </Tooltip>
+                </ListItem>
+            </List>
             <Dialog
                 open={open}
                 onClose={() => { setOpen(false) }}
@@ -101,6 +100,5 @@ export const OrderItem: FunctionComponent<OrderItemProps> = ({ title, changeTota
                 </DialogActions>
             </Dialog>
         </Card>
-
     )
 }

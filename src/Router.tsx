@@ -20,6 +20,7 @@ export function Router() {
     const page = useAppSelector(state => state.persistedReducer.pageSlice.page)
     const reducerTheme = useAppSelector<PaletteMode>(state => state.persistedReducer.themeSlice.mode)
     const [mode, setMode] = useState<PaletteMode>(reducerTheme === 'dark' ? 'light' : 'dark');
+    let theme = createTheme((getDesignTokens(reducerTheme)))
     const colorMode = ({
         toggleColorMode: () => {
             dispatcher(currentTheme(mode))
@@ -27,8 +28,6 @@ export function Router() {
             );
         },
     })
-
-    let theme = createTheme((getDesignTokens(reducerTheme)))
 
     return (
         <ColorModeContext.Provider value={colorMode}>
