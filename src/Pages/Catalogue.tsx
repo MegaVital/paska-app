@@ -148,10 +148,6 @@ export const Catalogue: FC<Props> = () => {
         else return 0
     }
 
-    const MenuProps = {
-        disableScrollLock: true
-    };
-
     return (
         <div>
             {
@@ -161,11 +157,9 @@ export const Catalogue: FC<Props> = () => {
                     <Grid container wrap={'nowrap'} columns={2} sx={{ pt: 12 }}>
                         <Box sx={{ minWidth: { md: '300px' } }}>
                             <FormControl sx={{ width: '-webkit-fill-available', mx: 3 }} >
-                                <InputLabel id="demo-simple-select-label">Sort</InputLabel>
+                                <InputLabel>Sort</InputLabel>
                                 <Select
-                                    MenuProps={MenuProps}
-                                    labelId="demo-simple-select-label"
-                                    id="demo-simple-select"
+                                    MenuProps={{ disableScrollLock: true }}
                                     value={sort}
                                     label="Sort"
                                     onChange={handleChange}
