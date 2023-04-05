@@ -17,6 +17,9 @@ export const getDesignTokens = (mode: PaletteMode) => ({
                 text: {
                     secondary: grey[600],
                 },
+                background: {
+                    paper: '#f5f5f5'
+                }
 
             }
             : {
@@ -25,6 +28,7 @@ export const getDesignTokens = (mode: PaletteMode) => ({
                 text: {
                     secondary: '#fff',
                 },
+
             }),
 
     },

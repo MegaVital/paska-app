@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Alert, Box, Button, Card, IconButton, InputAdornment, Snackbar, TextField, Typography } from '@mui/material';
+import { Alert, Box, Button, Card, Divider, IconButton, InputAdornment, Snackbar, TextField, Typography, styled, useTheme } from '@mui/material';
 import { AppRoutes } from "../routerTypes";
 import "./pages.css"
 import { LogInFields } from "../types";
@@ -23,6 +23,7 @@ export const Login: FC<Props> = () => {
     const signUp = () => {
         navigate(AppRoutes.REGISTRATION)
     }
+    const theme = useTheme()
     const [errorText, setErrorText] = useState('')
 
     const initialFields: LogInFields = {
@@ -100,7 +101,7 @@ export const Login: FC<Props> = () => {
 
     return (
         <Box sx={{ justifyContent: 'center', display: 'grid', pt: { md: 15 } }}>
-            <Card raised sx={{ maxWidth: '300px', mx: 'auto', mt: 4, py: 1.5, px: 2, display: 'flex', flexDirection: 'column', borderRadius: 'sm', fontSize: 20, alignItems: 'center' }}>
+            <Card raised sx={{ maxWidth: '300px', backgroundColor: theme.palette.background.paper, mx: 'auto', mt: 4, py: 1.5, px: 2, display: 'flex', flexDirection: 'column', borderRadius: 'sm', fontSize: 20, alignItems: 'center' }}>
                 Hello! You need to sign in.
             </Card>
             <Card variant='elevation' raised sx={{ maxWidth: '400px', display: 'flex', flexDirection: 'column' }}>
@@ -110,12 +111,22 @@ export const Login: FC<Props> = () => {
                         onChange={(event) => handleLogInFieldsInput(event.target.value, 'nameOrEmail')}
                         value={logInFields.nameOrEmail}
                         error={(errorText) ? true : false}
+                        inputProps={{
+                            style: {
+                                WebkitBoxShadow: `0 0 0 1000px ${theme.palette.background.default} inset`,
+                            }
+                        }}
                     />
                     <Typography variant="h6" sx={{ m: 2, ml: 0 }}>Password</Typography>
                     <TextField id="password" type={showPassword ? "text" : "password"} label='Type your password'
                         onChange={(event) => handleLogInFieldsInput(event.target.value, 'password')}
                         value={logInFields.password}
                         error={(errorText) ? true : false}
+                        inputProps={{
+                            style: {
+                                WebkitBoxShadow: `0 0 0 1000px ${theme.palette.background.default} inset`,
+                            }
+                        }}
                         InputProps={{
                             endAdornment: (
                                 <InputAdornment position="end">
@@ -136,10 +147,14 @@ export const Login: FC<Props> = () => {
                     >
                         <Alert severity="error" variant="filled" >{errorText}</Alert>
                     </Snackbar>
-                    <Button variant='contained' onClick={signIn} color='success' size='large' sx={{ margin: 2 }}>Sign in</Button>
-                    <Button variant='contained' onClick={signUp} color='primary' size='large'
+                    <Button variant='contained' onClick={signIn} size='large' sx={{ margin: 2, mt: 4 }}>
+                        Sign in
+                    </Button>
+                    <Divider sx={{ display: 'flex', alignItems: 'flex-start' }}>or</Divider>
+                    <Button variant='contained' onClick={signUp} size='large'
                         sx={{ margin: 2, mb: 0 }}
-                    >Create an account</Button>
+                    >Sign up
+                    </Button>
                 </Box>
                 <GoogleLogin
                     clientId={clientId}

@@ -143,25 +143,27 @@ export const Header: FunctionComponent<HeaderProps> = () => {
                                     :
                                     null
                             }
-                            <Typography
-                                variant="h6"
-                                sx={{ display: "flex", alignItems: 'center', ml: 4, whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}
-                            >
-                                {tokenState.name}
-                            </Typography>
-                            <Link component="button" onClick={() => { setOpen(true) }} sx={{ color: 'white', mx: 1, whiteSpace: 'nowrap' }} > (Log out)</Link>
-                            <Dialog
-                                disableScrollLock
-                                open={open}
-                                onClose={() => { setOpen(false) }}
-                                aria-describedby="alert-dialog-log-out"
-                            >
-                                <DialogTitle>Are you sure you want to leave?</DialogTitle>
-                                <DialogActions>
-                                    <Button autoFocus onClick={logOut}>Yes</Button>
-                                    <Button onClick={() => setOpen(false)}>Cancel</Button>
-                                </DialogActions>
-                            </Dialog>
+                            <Box sx={{ display: 'flex', flexDirection: 'row', maxWidth: '300px' }}>
+                                <Typography
+                                    variant="h6"
+                                    sx={{ display: "flex", alignItems: 'center', ml: 4, overflow: 'hidden' }}
+                                >
+                                    {tokenState.name}
+                                </Typography>
+                                <Link component="button" onClick={() => { setOpen(true) }} sx={{ color: 'white', mx: 1, whiteSpace: 'nowrap' }} > (Log out)</Link>
+                                <Dialog
+                                    disableScrollLock
+                                    open={open}
+                                    onClose={() => { setOpen(false) }}
+                                    aria-describedby="alert-dialog-log-out"
+                                >
+                                    <DialogTitle>Are you sure you want to leave?</DialogTitle>
+                                    <DialogActions>
+                                        <Button autoFocus onClick={logOut}>Yes</Button>
+                                        <Button onClick={() => setOpen(false)}>Cancel</Button>
+                                    </DialogActions>
+                                </Dialog>
+                            </Box>
                         </Box>
                     </Toolbar>
                 </AppBar>

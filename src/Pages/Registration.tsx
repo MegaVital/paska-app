@@ -1,6 +1,6 @@
 import React, { FC, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Alert, Box, Button, Card, IconButton, InputAdornment, Snackbar, TextField, Typography } from '@mui/material';
+import { Alert, Box, Button, Card, IconButton, InputAdornment, Snackbar, TextField, Typography, useTheme } from '@mui/material';
 import { AppRoutes } from "../routerTypes";
 import "./pages.css"
 import { blurInitialStateInterface, RegistrationFields } from "../types";
@@ -20,6 +20,7 @@ export const Registration: FC<Props> = () => {
     const back = () => {
         navigate(AppRoutes.LOGIN)
     }
+    const theme = useTheme()
     const [errorText, setErrorText] = useState('')
 
     const initialFields: RegistrationFields = {
@@ -100,7 +101,9 @@ export const Registration: FC<Props> = () => {
                         }}
                         error={(blur.name === true && registrationFields.name.length < 5) ? true : false}
                         onBlur={() => { onBlur('name', true) }}
-                        value={registrationFields.name} />
+                        value={registrationFields.name}
+                        inputProps={{ style: { backgroundColor: theme.palette.action.hover } }}
+                    />
                     {((blur.name === true && registrationFields.name.length < 5)) ? <Alert severity="error">Invalid name</Alert>
                         : <Box sx={{ height: '48px' }} />}
                     <Typography variant="h6" sx={{ m: 1, ml: 0 }}>E-mail</Typography>
@@ -111,7 +114,9 @@ export const Registration: FC<Props> = () => {
                         }}
                         error={(blur.email === true && !validateEmail(registrationFields.email)) ? true : false}
                         onBlur={() => { onBlur('email', true) }}
-                        value={registrationFields.email} />
+                        value={registrationFields.email}
+                        inputProps={{ style: { backgroundColor: theme.palette.action.hover } }}
+                    />
                     {(blur.email === true && !validateEmail(registrationFields.email)) ? <Alert severity="error">Invalid email</Alert>
                         : <Box sx={{ height: '48px' }} />}
                     <Typography variant="h6" sx={{ m: 1, ml: 0, mb: 0 }}>Password</Typography>
@@ -124,6 +129,7 @@ export const Registration: FC<Props> = () => {
                         label='Password'
                         onBlur={() => { onBlur('password', true) }}
                         error={blur.password && !validatePass(registrationFields.password)}
+                        inputProps={{ style: { backgroundColor: theme.palette.action.hover } }}
                         InputProps={{
                             endAdornment: (
                                 <InputAdornment position="end">
@@ -146,6 +152,7 @@ export const Registration: FC<Props> = () => {
                         label='Password Check'
                         error={blur.passwordCheck && !validatePass(registrationFields.passwordCheck)}
                         onBlur={() => { onBlur('passwordCheck', true) }}
+                        inputProps={{ style: { backgroundColor: theme.palette.action.hover } }}
                         InputProps={{
                             endAdornment: (
                                 <InputAdornment position="end">
