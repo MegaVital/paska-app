@@ -28,13 +28,13 @@ export const OrderButton: FunctionComponent<OrderButton> = () => {
     }
 
     return (
-        <IconButton aria-label='cart' onClick={goOrder}>
+        <IconButton aria-label='cart' onClick={goOrder} >
             <ShoppingCartIcon color='action' fontSize='large' sx={{ mr: 2 }} />
             <Typography
                 variant="h6"
                 noWrap
                 component="div"
-                sx={{ display: 'flex', mr: 5, width: '70px' }}
+                sx={{ display: 'flex', width: '70px' }}
             >
                 {totalPrice()}
             </Typography>

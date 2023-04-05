@@ -72,7 +72,7 @@ export const Header: FunctionComponent<HeaderProps> = () => {
         },
         marginLeft: 0,
         width: '100%',
-        [theme.breakpoints.up('sm')]: {
+        [theme.breakpoints.up('xs')]: {
             marginLeft: theme.spacing(1),
             width: 'auto',
         },
@@ -98,11 +98,10 @@ export const Header: FunctionComponent<HeaderProps> = () => {
         },
     }));
 
-
     return (
         (nav.pathname !== '/' && nav.pathname !== '/registration') ?
-            <Box sx={{ flexGrow: 1 }}>
-                <AppBar position="static">
+            <Box >
+                <AppBar position="fixed">
                     <Toolbar>
                         <IconButton onClick={colorMode.toggleColorMode}>
                             {(theme.palette.mode === 'light')
@@ -117,50 +116,51 @@ export const Header: FunctionComponent<HeaderProps> = () => {
                         <Link component="button" onClick={logOut}></Link>
                         <Typography
                             variant="h6"
-                            noWrap
                             component="div"
-                            sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' }, ml: 3 }}
+                            sx={{ flexGrow: 1, mx: 3 }}
                         >
                             {currentHeadLine()}
                         </Typography>
                         <Time />
-                        <OrderButton />
-                        {
-                            (nav.pathname === `/catalogue/page=${page}`) ?
-                                <Search>
-                                    <SearchIconWrapper>
-                                        <SearchIcon />
-                                    </SearchIconWrapper>
-                                    <StyledInputBase
-                                        placeholder="Search…"
-                                        inputProps={{ 'aria-label': 'search' }}
-                                        onChange={handleSearchInputChange}
-                                        value={searchTitle}
-                                        autoFocus={true}
-                                    />
-                                </Search>
-                                :
-                                null
-                        }
-                        <Typography
-                            variant="h6"
-                            noWrap
-                            component="div"
-                            sx={{ display: 'flex', ml: 4 }}
-                        >
-                            {tokenState.name}
-                        </Typography>
-                        <Link component="button" onClick={() => { setOpen(true) }} sx={{ color: 'white', mr: 2, ml: 2 }} >(Log out)</Link>
-                        <Dialog
-                            open={open}
-                            onClose={() => { setOpen(false) }}
-                            aria-describedby="alert-dialog-log-out">
-                            <DialogTitle>Are you sure you want to leave?</DialogTitle>
-                            <DialogActions>
-                                <Button autoFocus onClick={logOut}>Yes</Button>
-                                <Button onClick={() => setOpen(false)}>Cancel</Button>
-                            </DialogActions>
-                        </Dialog>
+                        <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+                            <OrderButton />
+                        </Box >
+                        <Box sx={{ display: 'flex' }}>
+                            {
+                                (nav.pathname === `/catalogue/page=${page}`) ?
+                                    <Search>
+                                        <SearchIconWrapper>
+                                            <SearchIcon />
+                                        </SearchIconWrapper>
+                                        <StyledInputBase
+                                            placeholder="Search…"
+                                            inputProps={{ 'aria-label': 'search' }}
+                                            onChange={handleSearchInputChange}
+                                            value={searchTitle}
+                                            autoFocus={true}
+                                        />
+                                    </Search>
+                                    :
+                                    null
+                            }
+                            <Typography
+                                variant="h6"
+                                sx={{ display: "flex", alignItems: 'center', ml: 4, minWidth: { xs: '100px' }, maxWidth: { xs: '200px' }, whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}
+                            >
+                                {tokenState.name}
+                            </Typography>
+                            <Link component="button" onClick={() => { setOpen(true) }} sx={{ color: 'white', mx: 2, whiteSpace: 'nowrap' }} > (Log out)</Link>
+                            <Dialog
+                                open={open}
+                                onClose={() => { setOpen(false) }}
+                                aria-describedby="alert-dialog-log-out">
+                                <DialogTitle>Are you sure you want to leave?</DialogTitle>
+                                <DialogActions>
+                                    <Button autoFocus onClick={logOut}>Yes</Button>
+                                    <Button onClick={() => setOpen(false)}>Cancel</Button>
+                                </DialogActions>
+                            </Dialog>
+                        </Box>
                     </Toolbar>
                 </AppBar>
             </Box> : null

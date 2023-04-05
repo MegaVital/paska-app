@@ -32,7 +32,7 @@ export const FilterComponent: FunctionComponent<FilterComponentProps> = () => {
     }
 
     return (
-        <Box sx={{ minWidth: '300px' }} role="presentation" >
+        <Box >
             {filter.map((filterItem) => (
                 (filterItem.name === 'Brand' || filterItem.name === 'Size' || filterItem.name === 'Material') ? (
                     <Card raised sx={{
@@ -95,13 +95,14 @@ export const FilterComponent: FunctionComponent<FilterComponentProps> = () => {
                     </AccordionDetails>
                 </Accordion>
             </Card>
-            <Grid sx={{ width: 200, display: 'grid' }}>
+            <Grid sx={{ mt: 2, ml: 3 }}>
                 <Button variant="contained" size='medium'
                     onClick={() => {
                         dispatcher(filterShift())
                         setSlider([min, max])
-                    }}
-                    sx={{ width: 'auto', justifySelf: 'center', mt: '10px' }}>Clear filter</Button>
+                    }}>
+                    Clear filter
+                </Button>
             </Grid>
         </Box>)
 }

@@ -82,7 +82,7 @@ export const Order: FC<OrderItemProps> = () => {
 
     return (
         <div>
-            <Typography sx={{ mt: 8, mb: 4, textAlign: 'center' }} variant="h3" component="div">
+            <Typography sx={{ mt: 12, mb: 4, textAlign: 'center' }} variant="h3" component="div">
                 Your cart:
             </Typography>
             <List sx={{ width: 700, margin: 'auto' }}>

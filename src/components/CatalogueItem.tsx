@@ -51,7 +51,7 @@ export const CatalogueItem: FunctionComponent<CatalogueItemProps> = ({ title, de
                 <Typography sx={{ color: theme.palette.text.secondary }} style={{ fontSize: 14, overflow: 'hidden', WebkitLineClamp: 1, WebkitBoxOrient: 'vertical', display: '-webkit-inline-box' }}>
                     Material: {material.join(', ')}
                 </Typography>
-                <Typography color='green' sx={{ fontWeight: 'bold' }}>
+                <Typography sx={{ fontWeight: 'bold', color: theme.palette.primary.main }}>
                     {price}$
                 </Typography>
             </CardContent >
@@ -79,7 +79,7 @@ export const CatalogueItem: FunctionComponent<CatalogueItemProps> = ({ title, de
                             :
                             <Tooltip title="Add to cart" placement="top">
                                 <IconButton
-                                    color='success'
+                                    sx={{ color: theme.palette.primary.main }}
                                     onClick={
                                         () => {
                                             changeTotalValue(id, false)

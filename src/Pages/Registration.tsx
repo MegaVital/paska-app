@@ -172,7 +172,7 @@ export const Registration: FC<Props> = () => {
                     onClick={createAccountButton}
                     color='primary' size='large'
                     sx={{ mx: 2 }}>Create an account</Button>
-                <Button variant='contained' onClick={back} color='error' size='large'
+                <Button variant='contained' onClick={back} color='success' size='large'
                     sx={{ m: 2, mb: 0 }}
                 >I already have an account</Button>
                 <Snackbar

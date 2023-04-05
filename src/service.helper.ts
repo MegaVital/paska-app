@@ -1,6 +1,6 @@
 import { PaletteMode } from "@mui/material";
 import { createContext } from "react";
-import { grey } from '@mui/material/colors';
+import { grey, deepOrange, red } from '@mui/material/colors';
 export const ColorModeContext = createContext({
     toggleColorMode: () => {
         // This is intentional
@@ -13,12 +13,15 @@ export const getDesignTokens = (mode: PaletteMode) => ({
         ...(mode === 'light'
             ? {
                 // palette values for light mode
+                primary: red,
                 text: {
                     secondary: grey[600],
                 },
+
             }
             : {
                 // palette values for dark mode
+                primary: deepOrange,
                 text: {
                     secondary: '#fff',
                 },

@@ -14,7 +14,7 @@ export const Product: FC<Props> = () => {
 
     return (
         <div>
-            <Card sx={{ maxWidth: 700, mt: 10, ml: 10 }}>
+            <Card raised sx={{ maxWidth: 700, mt: { xs: 12, md: 12 }, ml: { md: 10 }, mx: { xs: 3 } }}>
                 <CardContent>
                     <Typography variant="h4" sx={{ fontWeight: 'bold' }}>
                         {dataElement.title}

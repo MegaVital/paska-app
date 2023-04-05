@@ -10,6 +10,6 @@ export const Time: FunctionComponent<Time> = () => {
 
     return (
         <Typography
-            component="div" sx={{ mr: 3 }}>{new Date().toLocaleDateString()} {time}</Typography>
+            component="div" sx={{ mr: 3, display: { lg: 'block', xs: 'none' } }}>{new Date().toLocaleDateString()} {time}</Typography>
     )
 }
