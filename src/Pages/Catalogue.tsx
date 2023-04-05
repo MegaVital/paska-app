@@ -148,17 +148,22 @@ export const Catalogue: FC<Props> = () => {
         else return 0
     }
 
+    const MenuProps = {
+        disableScrollLock: true
+    };
+
     return (
         <div>
             {
                 (isLoading) ?
-                    <CircularProgress color="success" sx={{ ml: 10, mt: 10 }} />
+                    <CircularProgress color="success" sx={{ pl: 10, pt: 10 }} />
                     :
-                    <Grid container wrap={'nowrap'} columns={2} sx={{ mt: 12 }}>
+                    <Grid container wrap={'nowrap'} columns={2} sx={{ pt: 12 }}>
                         <Box sx={{ minWidth: { md: '300px' } }}>
-                            <FormControl sx={{ width: '-webkit-fill-available', mx: 3 }}>
+                            <FormControl sx={{ width: '-webkit-fill-available', mx: 3 }} >
                                 <InputLabel id="demo-simple-select-label">Sort</InputLabel>
                                 <Select
+                                    MenuProps={MenuProps}
                                     labelId="demo-simple-select-label"
                                     id="demo-simple-select"
                                     value={sort}
@@ -179,7 +184,7 @@ export const Catalogue: FC<Props> = () => {
                         </Box>
                         <Box>
                             {(serverData.length === 0) ? (
-                                <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mt: '20%', pl: '100px' }}>
+                                <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', pt: '20%', pl: '100px' }}>
                                     <MoodBadSharpIcon sx={{ width: '4em', height: '4em' }} />
                                     <Typography sx={{ fontSize: 24 }} >There is no such items</Typography>
                                 </Box>
@@ -188,8 +193,7 @@ export const Catalogue: FC<Props> = () => {
                                     {serverData
                                         .slice(firstContentIndex, lastContentIndex)
                                         .map((el, index) => {
-                                            return <Grid item key={serverData[index].id}
-                                                md={'auto'} sx={{ color: "aqua" }}>
+                                            return <Grid item key={serverData[index].id}>
                                                 <CatalogueItem
                                                     changeTotalValue={changeTotalValue}
                                                     {...el}
