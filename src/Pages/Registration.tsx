@@ -88,9 +88,9 @@ export const Registration: FC<Props> = () => {
     }
 
     return (
-        <Box sx={{ justifyContent: 'center', display: 'grid', mt: 8 }}>
+        <Box sx={{ justifyContent: 'center', display: 'grid', pt: 8, mx: { xs: 0, md: 3 } }}>
             <Typography variant="h4" sx={{ textAlign: 'center' }}>Welcome!</Typography>
-            <Card variant='elevation' raised sx={{ height: 'auto', width: 400, display: 'flex', flexDirection: 'column' }}>
+            <Card variant='elevation' raised sx={{ height: 'auto', width: '400px', display: 'flex', flexDirection: 'column' }}>
                 <Box sx={{ margin: 6, mb: 1, display: 'grid' }}>
                     <Typography variant="h6" sx={{ m: 1, ml: 0, mb: 0 }}>Name</Typography>
                     <Typography sx={{ m: 2, ml: 0, color: "grey", mt: 0, fontStyle: 'italic' }}>(at least 5 symbols)</Typography>

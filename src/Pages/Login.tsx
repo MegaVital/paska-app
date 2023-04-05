@@ -20,7 +20,6 @@ export const Login: FC<Props> = () => {
 
     const navigate = useNavigate()
     const dispatcher = useAppDispatch()
-
     const signUp = () => {
         navigate(AppRoutes.REGISTRATION)
     }
@@ -100,11 +99,11 @@ export const Login: FC<Props> = () => {
     };
 
     return (
-        <Box sx={{ justifyContent: 'center', display: 'grid', mt: 15 }}>
-            <Card raised sx={{ width: 300, mx: 'auto', mt: 4, py: 1.5, px: 2, display: 'flex', flexDirection: 'column', borderRadius: 'sm', fontSize: 20, alignItems: 'center' }}>
+        <Box sx={{ justifyContent: 'center', display: 'grid', pt: { md: 15 } }}>
+            <Card raised sx={{ maxWidth: '300px', mx: 'auto', mt: 4, py: 1.5, px: 2, display: 'flex', flexDirection: 'column', borderRadius: 'sm', fontSize: 20, alignItems: 'center' }}>
                 Hello! You need to sign in.
             </Card>
-            <Card variant='elevation' raised sx={{ height: 'auto', width: 400, display: 'flex', flexDirection: 'column' }}>
+            <Card variant='elevation' raised sx={{ maxWidth: '400px', display: 'flex', flexDirection: 'column' }}>
                 <Box sx={{ margin: 5, display: 'grid' }}>
                     <Typography variant="h6" sx={{ m: 2, ml: 0 }}>E-mail</Typography>
                     <TextField id="email" variant="outlined" label='Type your e-mail'
