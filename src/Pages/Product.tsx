@@ -14,17 +14,17 @@ export const Product: FC<Props> = () => {
 
     return (
         <div>
-            <Card raised sx={{ maxWidth: 700, mt: { xs: 12, md: 12 }, ml: { md: 10 }, mx: { xs: 3 } }}>
+            <Card raised sx={{ maxWidth: 700, mt: 12, mb: 4, ml: { md: 10 }, mx: { xs: 3 } }}>
                 <CardContent>
                     <Typography variant="h4" sx={{ fontWeight: 'bold' }}>
                         {dataElement.title}
 
                     </Typography>
                 </CardContent>
-                <CardContent sx={{ display: '-webkit-inline-box' }}>
+                <CardContent sx={{ display: { md: '-webkit-inline-box', xs: "flex" }, flexDirection: { xs: 'column' }, alignItems: { xs: 'center' }, WebkitBoxAlign: { md: 'start' } }}>
                     <img id='base64image' width={200} height={200} src={dataElement.image} />
-                    <CardActions sx={{ maxWidth: '400px', display: 'block', padding: 0, pl: '20px' }}>
-                        <Typography sx={{ fontWeight: 'bold', mb: 4 }}>Description:</Typography>
+                    <CardActions sx={{ maxWidth: '400px', display: { md: 'block', xs: 'contents' }, padding: 0, pl: '20px' }}>
+                        <Typography sx={{ fontWeight: 'bold', mb: 4, mt: { xs: 4, md: 0 } }}>Description:</Typography>
                         <Typography sx={{ textAlign: 'justify', mb: 4 }}>
                             {dataElement.description}
                         </Typography>

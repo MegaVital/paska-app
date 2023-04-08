@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Alert, Box, Button, Card, Divider, IconButton, InputAdornment, Snackbar, TextField, Typography, styled, useTheme } from '@mui/material';
+import { Alert, Box, Button, Card, Divider, IconButton, InputAdornment, Snackbar, TextField, Typography, useTheme } from '@mui/material';
 import { AppRoutes } from "../routerTypes";
 import "./pages.css"
 import { LogInFields } from "../types";
@@ -100,12 +100,10 @@ export const Login: FC<Props> = () => {
     };
 
     return (
-        <Box sx={{ justifyContent: 'center', display: 'grid', pt: { md: 15 } }}>
-            <Card raised sx={{ maxWidth: '300px', backgroundColor: theme.palette.background.paper, mx: 'auto', mt: 4, py: 1.5, px: 2, display: 'flex', flexDirection: 'column', borderRadius: 'sm', fontSize: 20, alignItems: 'center' }}>
-                Hello! You need to sign in.
-            </Card>
+        <Box sx={{ justifyContent: 'center', display: 'grid', pt: { md: 15, xs: 4 } }}>
             <Card variant='elevation' raised sx={{ maxWidth: '400px', display: 'flex', flexDirection: 'column' }}>
-                <Box sx={{ margin: 5, display: 'grid' }}>
+                <Typography sx={{ display: 'flex', alignItems: 'center', fontSize: 22, mt: 3, justifyContent: 'center' }}>Hello! You need to sign in.</Typography>
+                <Box sx={{ margin: 5, mt: 0, display: 'grid' }}>
                     <Typography variant="h6" sx={{ m: 2, ml: 0 }}>E-mail</Typography>
                     <TextField id="email" variant="outlined" label='Type your e-mail'
                         onChange={(event) => handleLogInFieldsInput(event.target.value, 'nameOrEmail')}
@@ -150,20 +148,24 @@ export const Login: FC<Props> = () => {
                     <Button variant='contained' onClick={signIn} size='large' sx={{ margin: 2, mt: 4 }}>
                         Sign in
                     </Button>
+                    <Box
+                        sx={{ margin: 2, mt: 0, display: 'grid' }}
+                    >
+                        <GoogleLogin
+                            clientId={clientId}
+                            buttonText="Sign in with Google"
+                            onSuccess={onSuccess}
+                            onFailure={onFailure}
+                            cookiePolicy={'single_host_origin'}
+                        />
+                    </Box>
                     <Divider sx={{ display: 'flex', alignItems: 'flex-start' }}>or</Divider>
                     <Button variant='contained' onClick={signUp} size='large'
-                        sx={{ margin: 2, mb: 0 }}
+                        sx={{ margin: 2 }}
                     >Sign up
                     </Button>
                 </Box>
-                <GoogleLogin
-                    clientId={clientId}
-                    buttonText="Sign in with Google"
-                    onSuccess={onSuccess}
-                    onFailure={onFailure}
-                    cookiePolicy={'single_host_origin'}
-                />
-            </Card>
-        </Box>
+            </Card >
+        </Box >
     )
 }
