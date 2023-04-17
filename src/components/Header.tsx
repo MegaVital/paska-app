@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { styled, alpha, useTheme } from '@mui/material/styles';
+import { styled, alpha } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
@@ -18,15 +18,49 @@ import { clearCartSlice } from '../redux/cartReducer';
 import { Time } from './Time';
 import { OrderButton } from './OrderButton';
 import useDebounce from './Hooks';
-import { ColorModeContext } from '../service.helper';
 import LightModeIcon from '@mui/icons-material/LightMode';
+import { currentTheme } from '../redux/themeReducer';
 
 type HeaderProps = {}
 
+const Search = styled('div')(({ theme }) => ({
+    position: 'relative',
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: alpha(theme.palette.common.white, 0.15),
+    '&:hover': {
+        backgroundColor: alpha(theme.palette.common.white, 0.25),
+    },
+    marginLeft: 0,
+    width: '100%',
+    [theme.breakpoints.up('xs')]: {
+        marginLeft: theme.spacing(1),
+        width: 'auto',
+    },
+}));
+
+const SearchIconWrapper = styled('div')(({ theme }) => ({
+    padding: theme.spacing(0, 2),
+    height: '100%',
+    position: 'absolute',
+    pointerEvents: 'none',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+}));
+
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
+    color: 'inherit',
+    '& .MuiInputBase-input': {
+        padding: theme.spacing(1, 1, 1, 0),
+        // vertical padding + font size from searchIcon
+        paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+        width: '100%',
+    },
+}));
+
 export const Header: FunctionComponent<HeaderProps> = () => {
     const page = useAppSelector(state => state.persistedReducer.pageSlice.page)
-    const theme = useTheme();
-    const colorMode = React.useContext(ColorModeContext);
+    const mode = useAppSelector(state => state.persistedReducer.themeSlice.mode)
     const nav = useLocation()
     const currentHeadLine = () => {
         switch (nav.pathname) {
@@ -63,110 +97,77 @@ export const Header: FunctionComponent<HeaderProps> = () => {
         setOpen(false)
     }
 
-    const Search = styled('div')(({ theme }) => ({
-        position: 'relative',
-        borderRadius: theme.shape.borderRadius,
-        backgroundColor: alpha(theme.palette.common.white, 0.15),
-        '&:hover': {
-            backgroundColor: alpha(theme.palette.common.white, 0.25),
-        },
-        marginLeft: 0,
-        width: '100%',
-        [theme.breakpoints.up('xs')]: {
-            marginLeft: theme.spacing(1),
-            width: 'auto',
-        },
-    }));
 
-    const SearchIconWrapper = styled('div')(({ theme }) => ({
-        padding: theme.spacing(0, 2),
-        height: '100%',
-        position: 'absolute',
-        pointerEvents: 'none',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-    }));
-
-    const StyledInputBase = styled(InputBase)(({ theme }) => ({
-        color: 'inherit',
-        '& .MuiInputBase-input': {
-            padding: theme.spacing(1, 1, 1, 0),
-            // vertical padding + font size from searchIcon
-            paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-            width: '100%',
-        },
-    }));
 
     return (
         (nav.pathname !== '/' && nav.pathname !== '/registration') ?
-            <Box >
-                <AppBar position="fixed">
-                    <Toolbar>
-                        <IconButton onClick={colorMode.toggleColorMode}>
-                            {(theme.palette.mode === 'light')
-                                ? <DarkModeSharpIcon color='action' />
-                                : <LightModeIcon />}
-                        </IconButton>
-                        {(nav.pathname !== `/catalogue/page=${page}`) ?
-                            <IconButton aria-label='home'
-                                onClick={goHome}>
-                                <HomeIcon fontSize='large' />
-                            </IconButton> : null}
-                        <Link component="button" onClick={logOut}></Link>
-                        <Typography
-                            variant="h6"
-                            component="div"
-                            sx={{ flexGrow: 1, mx: 3 }}
-                        >
-                            {currentHeadLine()}
-                        </Typography>
-                        <Time />
-                        <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-                            <OrderButton />
-                        </Box >
-                        <Box sx={{ display: 'flex' }}>
-                            {
-                                (nav.pathname === `/catalogue/page=${page}`) ?
-                                    <Search>
-                                        <SearchIconWrapper>
-                                            <SearchIcon />
-                                        </SearchIconWrapper>
-                                        <StyledInputBase
-                                            placeholder="Search…"
-                                            inputProps={{ 'aria-label': 'search' }}
-                                            onChange={handleSearchInputChange}
-                                            value={searchTitle}
-                                            autoFocus={true}
-                                        />
-                                    </Search>
-                                    :
-                                    null
-                            }
-                            <Box sx={{ display: 'flex', flexDirection: 'row', maxWidth: '300px' }}>
-                                <Typography
-                                    variant="h6"
-                                    sx={{ display: "flex", alignItems: 'center', ml: 4, overflow: 'hidden' }}
-                                >
-                                    {tokenState.name}
-                                </Typography>
-                                <Link component="button" onClick={() => { setOpen(true) }} sx={{ color: 'white', mx: 1, whiteSpace: 'nowrap' }} > (Log out)</Link>
-                                <Dialog
-                                    disableScrollLock
-                                    open={open}
-                                    onClose={() => { setOpen(false) }}
-                                    aria-describedby="alert-dialog-log-out"
-                                >
-                                    <DialogTitle>Are you sure you want to leave?</DialogTitle>
-                                    <DialogActions>
-                                        <Button autoFocus onClick={logOut}>Yes</Button>
-                                        <Button onClick={() => setOpen(false)}>Cancel</Button>
-                                    </DialogActions>
-                                </Dialog>
-                            </Box>
+            <AppBar className='_header' position="fixed">
+                <Toolbar>
+                    <IconButton onClick={() => {
+                        dispatcher(currentTheme(mode === 'dark' ? 'light' : 'dark'))
+                    }}>
+                        {(mode === 'light')
+                            ? <DarkModeSharpIcon color='action' />
+                            : <LightModeIcon />}
+                    </IconButton>
+                    {(nav.pathname !== `/catalogue/page=${page}`) ?
+                        <IconButton aria-label='home'
+                            onClick={goHome}>
+                            <HomeIcon fontSize='large' />
+                        </IconButton> : null}
+                    <Link component="button" onClick={logOut}></Link>
+                    <Typography
+                        variant="h6"
+                        component="div"
+                        sx={{ flexGrow: 1, mx: 3 }}
+                    >
+                        {currentHeadLine()}
+                    </Typography>
+                    <Time />
+                    <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+                        <OrderButton />
+                    </Box >
+                    <Box sx={{ display: 'flex' }}>
+                        {
+                            (nav.pathname === `/catalogue/page=${page}`) ?
+                                <Search>
+                                    <SearchIconWrapper>
+                                        <SearchIcon />
+                                    </SearchIconWrapper>
+                                    <StyledInputBase
+                                        placeholder="Search…"
+                                        inputProps={{ 'aria-label': 'search' }}
+                                        onChange={handleSearchInputChange}
+                                        value={searchTitle}
+                                        autoFocus={true}
+                                    />
+                                </Search>
+                                :
+                                null
+                        }
+                        <Box sx={{ display: 'flex', flexDirection: 'row', maxWidth: '300px' }}>
+                            <Typography
+                                variant="h6"
+                                sx={{ display: "flex", alignItems: 'center', ml: 4, overflow: 'hidden' }}
+                            >
+                                {tokenState.name}
+                            </Typography>
+                            <Link component="button" onClick={() => { setOpen(true) }} sx={{ color: 'white', mx: 1, whiteSpace: 'nowrap' }} > (Log out)</Link>
+                            <Dialog
+                                disableScrollLock
+                                open={open}
+                                onClose={() => { setOpen(false) }}
+                                aria-describedby="alert-dialog-log-out"
+                            >
+                                <DialogTitle>Are you sure you want to leave?</DialogTitle>
+                                <DialogActions>
+                                    <Button autoFocus onClick={logOut}>Yes</Button>
+                                    <Button onClick={() => setOpen(false)}>Cancel</Button>
+                                </DialogActions>
+                            </Dialog>
                         </Box>
-                    </Toolbar>
-                </AppBar>
-            </Box> : null
+                    </Box>
+                </Toolbar>
+            </AppBar> : null
     )
 }

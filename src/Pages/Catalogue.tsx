@@ -159,7 +159,7 @@ export const Catalogue: FC<Props> = () => {
                             <FormControl sx={{ width: '-webkit-fill-available', mx: 3 }} >
                                 <InputLabel>Sort</InputLabel>
                                 <Select
-                                    MenuProps={{ disableScrollLock: true }}
+                                    // MenuProps={{ disableScrollLock: true }}
                                     value={sort}
                                     label="Sort"
                                     onChange={handleChange}

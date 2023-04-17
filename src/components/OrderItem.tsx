@@ -34,7 +34,7 @@ export const OrderItem: FunctionComponent<OrderItemProps> = ({ title, changeTota
             <List sx={{ width: 700, margin: 'auto', padding: 0, flexDirection: 'row', display: 'flex' }}>
                 <ListItem sx={{ width: 'auto', justifyContent: 'center' }}>
                     <Button onClick={() => { goProduct(id) }}>
-                        <img id='base64image' width={200} height={200} src={image} />
+                        <img id='base64image' width={80} height={80} src={image} />
                     </Button>
                 </ListItem>
                 <ListItem sx={{ width: 200, justifyContent: 'center' }}>
