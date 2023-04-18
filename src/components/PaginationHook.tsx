@@ -28,7 +28,7 @@ const usePagination: UsePagination = ({ contentPerPage, count }) => {
             }
         };
         dispatcher(currentPage(newPage()))
-        navigate(`/catalogue/page=${newPage()}`)
+        navigate(`Furniture-Shop-app/catalogue/page=${newPage()}`)
 
     };
 
@@ -41,7 +41,7 @@ const usePagination: UsePagination = ({ contentPerPage, count }) => {
             setPage(num);
         }
         dispatcher(currentPage(num))
-        navigate(`/catalogue/page=${num}`)
+        navigate(`Furniture-Shop-app/catalogue/page=${num}`)
     };
 
     return {

@@ -76,7 +76,7 @@ export const Order: FC<OrderItemProps> = () => {
     const goProduct = (id: string) => {
         serverData.map((el: { id: string; }) => {
             if (el.id === id)
-                navigate(`/product/${el.id}`)
+                navigate(`Furniture-Shop-app/product/${el.id}`)
         })
     }
 

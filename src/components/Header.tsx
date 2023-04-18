@@ -64,9 +64,9 @@ export const Header: FunctionComponent<HeaderProps> = () => {
     const nav = useLocation()
     const currentHeadLine = () => {
         switch (nav.pathname) {
-            case `/catalogue/page=${page}`:
+            case `Furniture-Shop-app/catalogue/page=${page}`:
                 return 'Catalogue'
-            case '/order':
+            case 'Furniture-Shop-app/order':
                 return 'Order'
             default:
                 return 'Product'
@@ -100,7 +100,7 @@ export const Header: FunctionComponent<HeaderProps> = () => {
 
 
     return (
-        (nav.pathname !== '/' && nav.pathname !== '/registration') ?
+        (nav.pathname !== 'Furniture-Shop-app/' && nav.pathname !== 'Furniture-Shop-app/registration') ?
             <AppBar className='_header' position="fixed">
                 <Toolbar>
                     <IconButton onClick={() => {
@@ -110,7 +110,7 @@ export const Header: FunctionComponent<HeaderProps> = () => {
                             ? <DarkModeSharpIcon color='action' />
                             : <LightModeIcon />}
                     </IconButton>
-                    {(nav.pathname !== `/catalogue/page=${page}`) ?
+                    {(nav.pathname !== `Furniture-Shop-app/catalogue/page=${page}`) ?
                         <IconButton aria-label='home'
                             onClick={goHome}>
                             <HomeIcon fontSize='large' />
@@ -129,7 +129,7 @@ export const Header: FunctionComponent<HeaderProps> = () => {
                     </Box >
                     <Box sx={{ display: 'flex' }}>
                         {
-                            (nav.pathname === `/catalogue/page=${page}`) ?
+                            (nav.pathname === `Furniture-Shop-app/catalogue/page=${page}`) ?
                                 <Search>
                                     <SearchIconWrapper>
                                         <SearchIcon />
