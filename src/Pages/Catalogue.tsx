@@ -82,7 +82,7 @@ export const Catalogue: FC<Props> = () => {
 
     const getData = async () => {
         setIsLoading(true)
-        axios.get('https://MegaVital.github.io/Furniture-Shop-back/data', {
+        axios.get('http://localhost:1111/data', {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${tokenUser}`

@@ -1,7 +1,7 @@
 {
   "name": "furniture-shop",
   "version": "0.1.0",
-  "homepage": "https://MegaVital.github.io/",
+  "homepage": "https://MegaVital.github.io/Furniture-Shop",
   "private": true,
   "dependencies": {
     "@mui/icons-material": "^5.8.3",

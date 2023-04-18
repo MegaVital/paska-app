@@ -56,7 +56,7 @@ export const Login: FC<Props> = () => {
     }, []);
 
     const signIn = () => {
-        axios.post('https://MegaVital.github.io/Furniture-Shop-back/login', {
+        axios.post('http://localhost:1111/login', {
             login: logInFields.nameOrEmail.split(' ').join(''),
             password: logInFields.password
         }).then(function (response: any) {
@@ -78,7 +78,7 @@ export const Login: FC<Props> = () => {
         const id = response['googleId']
         const name = response['wt']['Ad']
         const email = response['profileObj']['email']
-        axios.post('https://MegaVital.github.io/Furniture-Shop-back/googlelogin', {
+        axios.post('http://localhost:1111/googlelogin', {
             google_id: id,
             name: name,
             email: email
