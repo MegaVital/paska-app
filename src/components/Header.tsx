@@ -73,7 +73,7 @@ export const Header: FunctionComponent<HeaderProps> = () => {
         }
     }
     const goHome = () => {
-        navigate(AppRoutes.LOGIN)
+        navigate(`Furniture-Shop-app${AppRoutes.LOGIN}`)
     }
     const navigate = useNavigate()
     const dispatcher = useAppDispatch()
