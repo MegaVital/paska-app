@@ -55,7 +55,7 @@ export const Registration: FC<Props> = () => {
     };
 
     const createAccountButton = () => {
-        axios.post('http://localhost:1111/registration', {
+        axios.post('https://MegaVital.github.io/Furniture-Shop-back/registration', {
             name: registrationFields.name.split(' ').join(''),
             email: registrationFields.email.split(' ').join(''),
             password: bcrypt.hashSync(registrationFields.password, salt)
