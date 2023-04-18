@@ -1,6 +1,7 @@
 {
   "name": "furniture-shop",
   "version": "0.1.0",
+  "homepage": "https://MegaVital.github.io/Furniture-Shop-app",
   "private": true,
   "dependencies": {
     "@mui/icons-material": "^5.8.3",
@@ -41,6 +42,8 @@
     "yargs": "^17.5.1"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -69,7 +72,8 @@
     "@redux-devtools/core": "^3.13.1",
     "@types/bcryptjs": "^2.4.2",
     "@types/jsonwebtoken": "^8.5.8",
-    "@types/react-router-dom": "^5.3.3"
+    "@types/react-router-dom": "^5.3.3",
+    "gh-pages": "^5.0.0"
   },
   "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
   "main": "index.js",
