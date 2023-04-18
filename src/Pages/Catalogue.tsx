@@ -109,7 +109,7 @@ export const Catalogue: FC<Props> = () => {
     const goProduct = (id: string) => {
         serverData.map((el: { id: string; }) => {
             if (el.id === id)
-                navigate(`Furniture-Shop-app/product/${el.id}`)
+                navigate(`/product/${el.id}`)
         })
     }
 
@@ -159,6 +159,7 @@ export const Catalogue: FC<Props> = () => {
                             <FormControl sx={{ width: '-webkit-fill-available', mx: 3 }} >
                                 <InputLabel>Sort</InputLabel>
                                 <Select
+                                    // MenuProps={{ disableScrollLock: true }}
                                     value={sort}
                                     label="Sort"
                                     onChange={handleChange}

@@ -23,11 +23,12 @@ export function Router() {
             <CssBaseline />
             <Header />
             <Routes >
-                <Route path={`Furniture-Shop-app${AppRoutes.LOGIN}`} element={(!tokenState) ? <Login /> : <Navigate to={`Furniture-Shop-app/catalogue/page=${page}`} replace={true} />} />
-                <Route path={`Furniture-Shop-app${AppRoutes.REGISTRATION}`} element={(!tokenState) ? <Registration /> : <Navigate to={`Furniture-Shop-app/catalogue/page=${page}`} replace={true} />} />
-                <Route path={`Furniture-Shop-app${AppRoutes.CATALOGUE}/page=${page}`} element={(tokenState) ? <Catalogue /> : <Navigate to="Furniture-Shop-app/" replace={true} />} />
-                <Route path={`Furniture-Shop-app${AppRoutes.ORDER}`} element={(tokenState) ? <Order /> : <Navigate to="Furniture-Shop-app/" replace={true} />} />
-                <Route path={`Furniture-Shop-app${AppRoutes.PRODUCT}/:productID`} element={(tokenState) ? <Product /> : <Navigate to="Furniture-Shop-app/" replace={true} />} />
+                <Route path={AppRoutes.LOGIN} element={(!tokenState) ? <Login /> : <Navigate to={`/catalogue/page=${page}`} replace={true} />} />
+                <Route path={AppRoutes.REGISTRATION} element={(!tokenState) ? <Registration /> : <Navigate to={`/catalogue/page=${page}`} replace={true} />} />
+                <Route path={`${AppRoutes.CATALOGUE}/page=${page}`} element={(tokenState) ? <Catalogue /> : <Navigate to="/" replace={true} />} />
+                <Route path={AppRoutes.ORDER} element={(tokenState) ? <Order /> : <Navigate to="/" replace={true} />} />
+                <Route path={`${AppRoutes.PRODUCT}/:productID`} element={(tokenState) ? <Product /> : <Navigate to="/" replace={true} />} />
+                <Route path={'/*'} element={<Navigate to="/" replace={true} />} />
             </Routes>
         </ThemeProvider>
     )

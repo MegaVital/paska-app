@@ -18,7 +18,7 @@ export const Registration: FC<Props> = () => {
     const navigate = useNavigate()
     const dispatcher = useAppDispatch()
     const back = () => {
-        navigate(`Furniture-Shop-app/${AppRoutes.LOGIN}`)
+        navigate(AppRoutes.LOGIN)
     }
     const theme = useTheme()
     const [errorText, setErrorText] = useState('')

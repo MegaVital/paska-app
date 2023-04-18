@@ -12,7 +12,7 @@ export const OrderButton: FunctionComponent<OrderButton> = () => {
     const cart = useAppSelector(state => state.persistedReducer.cartSlice)
     const data = useAppSelector(state => state.persistedReducer.dataSlice.data)
     const goOrder = () => {
-        navigate(`Furniture-Shop-app${AppRoutes.ORDER}`)
+        navigate(AppRoutes.ORDER)
     }
 
     const totalPrice = () => {

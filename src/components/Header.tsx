@@ -64,16 +64,16 @@ export const Header: FunctionComponent<HeaderProps> = () => {
     const nav = useLocation()
     const currentHeadLine = () => {
         switch (nav.pathname) {
-            case `Furniture-Shop-app/catalogue/page=${page}`:
+            case `/catalogue/page=${page}`:
                 return 'Catalogue'
-            case 'Furniture-Shop-app/order':
+            case '/order':
                 return 'Order'
             default:
                 return 'Product'
         }
     }
     const goHome = () => {
-        navigate(`Furniture-Shop-app${AppRoutes.LOGIN}`)
+        navigate(AppRoutes.LOGIN)
     }
     const navigate = useNavigate()
     const dispatcher = useAppDispatch()
@@ -100,7 +100,7 @@ export const Header: FunctionComponent<HeaderProps> = () => {
 
 
     return (
-        (nav.pathname !== 'Furniture-Shop-app/' && nav.pathname !== 'Furniture-Shop-app/registration') ?
+        (nav.pathname !== '/' && nav.pathname !== '/registration') ?
             <AppBar className='_header' position="fixed">
                 <Toolbar>
                     <IconButton onClick={() => {
@@ -110,7 +110,7 @@ export const Header: FunctionComponent<HeaderProps> = () => {
                             ? <DarkModeSharpIcon color='action' />
                             : <LightModeIcon />}
                     </IconButton>
-                    {(nav.pathname !== `Furniture-Shop-app/catalogue/page=${page}`) ?
+                    {(nav.pathname !== `/catalogue/page=${page}`) ?
                         <IconButton aria-label='home'
                             onClick={goHome}>
                             <HomeIcon fontSize='large' />
@@ -129,7 +129,7 @@ export const Header: FunctionComponent<HeaderProps> = () => {
                     </Box >
                     <Box sx={{ display: 'flex' }}>
                         {
-                            (nav.pathname === `Furniture-Shop-app/catalogue/page=${page}`) ?
+                            (nav.pathname === `/catalogue/page=${page}`) ?
                                 <Search>
                                     <SearchIconWrapper>
                                         <SearchIcon />
