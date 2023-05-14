@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Typography, List, ListItem } from '@mui/material';
+import { Typography, List, ListItem, Box } from '@mui/material';
 import "./pages.css"
 import Divider from '@mui/material/Divider';
 import { OrderItem } from "../components/OrderItem";
@@ -81,8 +81,8 @@ export const Order: FC<OrderItemProps> = () => {
     }
 
     return (
-        <div>
-            <Typography sx={{ mt: 12, mb: 4, textAlign: 'center' }} variant="h3" component="div">
+        <Box sx={{ width: { xs: 'fit-content', md: 'auto' } }}>
+            <Typography sx={{ mt: 12, mb: 4, textAlign: 'center' }} variant="h3">
                 Your cart:
             </Typography>
             <List sx={{ width: 700, margin: 'auto' }}>
@@ -105,6 +105,6 @@ export const Order: FC<OrderItemProps> = () => {
                 )}
             </List>
             <Typography sx={{ fontSize: 24, textAlign: 'center', fontWeight: 'bold', my: 4 }}>Total: {totalPrice()} $</Typography>
-        </div>
+        </Box>
     )
 }
